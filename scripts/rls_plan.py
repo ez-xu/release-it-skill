@@ -27,6 +27,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import shutil
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -35,11 +36,15 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import rls_shell  # noqa: E402
 from rls_repo import inspect  # noqa: E402
-from rls_version import compare, render_notes, resolve_version  # noqa: E402
+from rls_version import VersionError, compare, render_notes, resolve_version, split_prefix  # noqa: E402
 
 SKILL_NAME = "release-it-skill"
 PLAN_VERSION = 1
-DEFAULT_RELEASE_IT = "21.1.1"
+# ez-xu/release-it keeps a declared non-semver version verbatim; npm's upstream
+# release-it truncates it to the leading semantic version.  A declared version is refused
+# when the resolved runner cannot be shown to carry that fix, so the fork is the default.
+DEFAULT_RELEASE_IT = "github:ez-xu/release-it"
+UPSTREAM_RELEASE_IT = "21.1.1"
 STATE_DIR_NAME = "release-it-skill"
 NPM_PACKAGE_URL = "https://www.npmjs.com/package"
 SCHEMA_URL = "https://raw.githubusercontent.com/release-it/release-it/main/schema/release-it.json"
@@ -135,7 +140,47 @@ def tag_prefix_for(facts, explicit=None):
     """release-it derives ``v${version}`` only when the latest tag starts with v."""
     if explicit is not None:
         return explicit
-    return "v" if str(facts.get("latest_tag") or "").startswith("v") else ""
+    latest = str(facts.get("latest_tag") or "")
+    return latest[0] if latest[:1] in ("v", "V") else ""
+
+
+def _version_module(repo, program):
+    """Path to release-it's Version.js for a resolved runner, or None."""
+    roots = []
+    if program and program not in ("npx", "npx.cmd"):
+        found = program
+        if not (os.path.isabs(program) or os.sep in program):
+            found = shutil.which(program) or ""
+        if found:
+            here = Path(found).resolve()
+            for parent in [here] + list(here.parents)[:3]:
+                roots.append(parent / "release-it")
+                roots.append(parent / "node_modules" / "release-it")
+    roots.append(Path(repo) / "node_modules" / "release-it")
+    for root in roots:
+        probe = root / "lib" / "plugin" / "version" / "Version.js"
+        if probe.exists():
+            return probe
+    return None
+
+
+def supports_declared(repo, runner):
+    """True when the resolved release-it can be shown to keep a version verbatim.
+
+    A declared version is only safe on a runner that carries the fork's fix, so this is
+    evidence, not a guess: for npx the spec itself is the evidence, otherwise the
+    installed Version.js is read and searched for the fork's own code.
+    """
+    if runner.get("kind") == "npx":
+        return "ez-xu/release-it" in str(runner.get("pin") or "")
+    probe = _version_module(repo, runner.get("program"))
+    if probe is None:
+        return False
+    try:
+        source = probe.read_text(encoding="utf-8", errors="replace")
+    except OSError:
+        return False
+    return "latestIsComparable" in source or "Declared version strings are used verbatim" in source
 
 
 def resolve_runner(repo, pin=DEFAULT_RELEASE_IT):
@@ -148,24 +193,51 @@ def resolve_runner(repo, pin=DEFAULT_RELEASE_IT):
             return {"kind": "local", "program": str(candidate), "prefix": [], "pin": None}
     if rls_shell.available("release-it"):
         return {"kind": "path", "program": "release-it", "prefix": [], "pin": None}
-    return {
-        "kind": "npx",
-        "program": "npx",
-        "prefix": ["--yes", "release-it@%s" % pin],
-        "pin": pin,
-    }
+    # A bare version pins npm; anything else (github:owner/repo, a path) is a specifier
+    # npx resolves as written.
+    spec = pin if any(token in pin for token in (":", "/")) else "release-it@%s" % pin
+    return {"kind": "npx", "program": "npx", "prefix": ["--yes", spec], "pin": pin}
+
+
+def select_runner(facts, opts, declared):
+    """The runner to use, preferring the fork when a declared version needs it.
+
+    An installed release-it wins normally, because it is what the repository pins.  A
+    declared version is the exception: an upstream copy would truncate it, so a runner
+    that cannot be shown to carry the fix is replaced by the fork fetched through npx.
+    """
+    repo = facts.get("repo", ".")
+    runner = resolve_runner(repo, runner_pin(opts))
+    supported = supports_declared(repo, runner)
+    if declared and not supported:
+        candidate = {
+            "kind": "npx",
+            "program": "npx",
+            "prefix": ["--yes", "github:ez-xu/release-it"],
+            "pin": "github:ez-xu/release-it",
+        }
+        if supports_declared(repo, candidate):
+            candidate["fallback_from"] = runner.get("pin") or runner.get("kind")
+            runner, supported = candidate, True
+    runner["supports_declared"] = supported
+    return runner
 
 
 # --------------------------------------------------------------------------- #
 # links
 # --------------------------------------------------------------------------- #
-def build_links(facts, provider, tag, version, package, publishing):
+def build_links(facts, provider, tag, version, package, publishing, declared=False):
     host = (facts.get("remote") or {}).get("host") or ""
     project = facts.get("project") or ""
     base = "https://%s/%s" % (host, project) if host and project else ""
     if not base:
         return {"repository": "", "tag": "", "release": "", "package": "",
-                "registry": "", "compare": "", "api": ""}
+                "registry": "", "compare": "", "api": "", "package_published": False}
+
+    # npm cannot carry a non-semver version, so a declared version has no registry page:
+    # the package link is recorded as absent rather than as a URL that cannot exist.
+    if declared:
+        package = ""
 
     previous = facts.get("latest_tag") or ""
     if provider == "github":
@@ -201,20 +273,34 @@ def build_links(facts, provider, tag, version, package, publishing):
 # --------------------------------------------------------------------------- #
 # configuration
 # --------------------------------------------------------------------------- #
+def _literal(template, version):
+    """Substitute ``${version}`` ourselves instead of leaving it to release-it.
+
+    release-it renders ``git.commitMessage`` and ``git.tagAnnotation`` through
+    ``parseVersion()``, which shortens a declared non-semver version to its semantic
+    prefix -- measured as ``git commit --message Release 5.1.7`` for version
+    ``5.1.7.12_weiyuan_G200464803_20261016_8aef61de``.  Baking the literal in removes
+    that path, so the message and the annotation carry the version that was declared.
+    """
+    return str(template).replace("${version}", str(version))
+
+
 def build_config(facts, opts, state_dir):
     """The effective release-it configuration, with every array written in full."""
     provider = opts["provider"]
     prefix = opts["tag_prefix"]
+    version = opts["version"]
+    declared = opts.get("version_source") == "declared"
     notes = notes_command(state_dir)
 
     git = {
         "requireCleanWorkingDir": not opts["allow_dirty"],
         "requireUpstream": not opts["allow_no_upstream"],
         "commit": True,
-        "commitMessage": opts["commit_message"],
+        "commitMessage": _literal(opts["commit_message"], version),
         "tag": True,
-        "tagName": "%s${version}" % prefix,
-        "tagAnnotation": opts["tag_annotation"] or None,
+        "tagName": "%s%s" % (prefix, version),
+        "tagAnnotation": _literal(opts["tag_annotation"], version) or None,
         "push": True,
         "pushArgs": ["--follow-tags"],
         "changelog": notes,
@@ -223,14 +309,14 @@ def build_config(facts, opts, state_dir):
         git["requireBranch"] = opts["require_branch"]
 
     npm = {
-        "publish": bool(opts["publish"]),
+        "publish": bool(opts["publish"]) and not declared,
         "publishPath": ".",
         "publishPackageManager": opts["publish_package_manager"],
     }
 
     github = {
         "release": bool(opts["release"] and provider == "github"),
-        "releaseName": opts["release_name"],
+        "releaseName": _literal(opts["release_name"], version),
         "releaseNotes": notes,
         "autoGenerate": bool(opts["auto_generate"]),
         "draft": bool(opts["draft"]),
@@ -241,7 +327,7 @@ def build_config(facts, opts, state_dir):
 
     gitlab = {
         "release": bool(opts["release"] and provider == "gitlab"),
-        "releaseName": opts["release_name"],
+        "releaseName": _literal(opts["release_name"], version),
         "releaseNotes": notes,
     }
     if opts["assets"]:
@@ -268,7 +354,12 @@ def build_argv(opts, runner, config_path, version):
     argv += ["--config", str(config_path)]
     if opts["dry_run"]:
         argv.append("--dry-run")
-    if not opts["publish"]:
+    if opts.get("version_source") == "declared":
+        # npm cannot carry a non-semver version: `npm version <v>` fails with
+        # "Invalid version" and aborts the whole run before any commit or tag is written,
+        # so the npm plugin is switched off entirely rather than left to fail.
+        argv.append("--no-npm")
+    elif not opts["publish"]:
         argv.append("--no-npm.publish")
     if not opts["release"]:
         argv.append("--no-github.release")
@@ -280,12 +371,20 @@ def build_argv(opts, runner, config_path, version):
 # --------------------------------------------------------------------------- #
 # the plan
 # --------------------------------------------------------------------------- #
-def assess(facts, opts, version, tag, state_dir):
+def assess(facts, opts, version, tag, state_dir, runner=None):
     """Return (blockers, warnings) as lists of human-readable strings."""
     blockers = []
     warnings = []
+    declared = opts.get("version_source") == "declared"
+    repo = facts.get("repo", ".")
 
     for problem in facts.get("problems", []):
+        if declared and problem and problem == facts.get("manifest_error"):
+            warnings.append(
+                "%s; a declared version is released from the tag, so no version manifest "
+                "is needed" % problem
+            )
+            continue
         if problem == "working tree is not clean" and opts["allow_dirty"]:
             warnings.append(
                 "the working tree is dirty and --allow-dirty was given, so "
@@ -303,22 +402,67 @@ def assess(facts, opts, version, tag, state_dir):
     if not facts.get("provider"):
         blockers.append("no release interface could be chosen for this remote")
 
-    if facts.get("manifest_error"):
+    if facts.get("manifest_error") and not declared:
         blockers.append("package manifest cannot be read: %s" % facts["manifest_error"])
 
-    latest = str(facts.get("latest_tag") or "")
-    if latest:
-        latest_version = latest.lstrip("v")
-        if _same_or_behind(version, latest_version):
-            blockers.append(
-                "%s is not newer than the released tag %s; release-it only accepts an explicit "
-                "version it considers greater than or equal to the latest tag" % (version, latest)
+    if declared:
+        if runner is None:
+            runner = select_runner(facts, opts, True)
+        if runner.get("fallback_from"):
+            warnings.append(
+                "the release-it this machine has on PATH (%s) does not carry the declared-version "
+                "fix, so the fork github:ez-xu/release-it is fetched through npx instead"
+                % runner["fallback_from"]
             )
-    elif facts.get("version") and _same_or_behind(version, facts["version"]):
-        blockers.append(
-            "%s is not newer than package.json version %s; release-it would try to publish an "
-            "already published version" % (version, facts["version"])
+        if not runner.get("supports_declared"):
+            blockers.append(
+                "the release-it this would run (%s) truncates a declared non-semver version to "
+                "its semantic prefix, so the tag would not be %s; install the fork with "
+                "`npm install github:ez-xu/release-it` or pass "
+                "--release-it-version github:ez-xu/release-it"
+                % (runner.get("pin") or runner.get("kind"), tag)
+            )
+        if opts.get("declared_prefix_split"):
+            warnings.append(
+                "the leading %r was moved out of the version into git.tagName, because "
+                "release-it would otherwise coerce it away; the tag is still exactly the "
+                "string that was declared" % opts["declared_prefix_split"]
+            )
+        if facts.get("manifest"):
+            warnings.append(
+                "npm cannot carry %r, so the npm plugin is disabled for this release; %s "
+                "keeps its current version and no package link is recorded"
+                % (version, facts["manifest"])
+            )
+        warnings.append(
+            "%r is not a semantic version: it is released verbatim, its ordering cannot be "
+            "checked against the latest tag, and no increment can be derived from it"
+            % (version,)
         )
+        warnings.append(
+            "with the npm plugin disabled nothing in the repository changes, so release-it "
+            "creates no release commit and tags the commit that is already HEAD"
+        )
+        if str(facts.get("version") or "").strip() == version:
+            blockers.append(
+                "%s is already the version in %s; a version is never released twice"
+                % (version, facts.get("manifest"))
+            )
+    else:
+        latest = str(facts.get("latest_tag") or "")
+        if latest:
+            latest_version = latest.lstrip("v")
+            if _same_or_behind(version, latest_version):
+                blockers.append(
+                    "%s is not newer than the released tag %s; release-it only accepts an explicit "
+                    "version it considers greater than or equal to the latest tag" % (version, latest)
+                )
+        elif facts.get("version") and _same_or_behind(version, facts["version"]):
+            blockers.append(
+                "%s is not newer than package.json version %s; release-it would try to publish an "
+                "already published version" % (version, facts["version"])
+            )
+
     if rls_shell.available("git") and facts.get("remote", {}).get("url"):
         if _remote_tag_exists(facts, tag):
             blockers.append("tag %s already exists on origin; a published version is never reused" % tag)
@@ -391,16 +535,18 @@ def build_plan(repo=".", **kwargs):
             previous_tag=facts.get("latest_tag") or "",
             package=facts.get("package"),
             repository_url=build_links(
-                facts, opts["provider"], opts["tag"], opts["version"], facts.get("package"), opts["publish"]
+                facts, opts["provider"], opts["tag"], opts["version"], facts.get("package"),
+                opts["publish"], declared=opts["version_source"] == "declared",
             )["repository"],
         )
 
     config = build_config(facts, opts, state_dir)
-    runner = resolve_runner(facts.get("repo", repo), runner_pin(opts))
+    runner = select_runner(facts, opts, opts["version_source"] == "declared")
     argv = build_argv(opts, runner, config_path, opts["version"])
-    blockers, warnings = assess(facts, opts, opts["version"], opts["tag"], state_dir)
+    blockers, warnings = assess(facts, opts, opts["version"], opts["tag"], state_dir, runner)
     links = build_links(
-        facts, opts["provider"], opts["tag"], opts["version"], facts.get("package"), opts["publish"]
+        facts, opts["provider"], opts["tag"], opts["version"], facts.get("package"),
+        opts["publish"], declared=opts["version_source"] == "declared",
     )
 
     manifest = Path(facts["manifest"]) if facts.get("manifest") else None
@@ -429,6 +575,8 @@ def build_plan(repo=".", **kwargs):
             "runner": runner["kind"],
             "program": runner["program"],
             "pin": runner["pin"],
+            "supports_declared": bool(runner.get("supports_declared")),
+            "fallback_from": runner.get("fallback_from"),
             "argv": argv,
             "display": " ".join(quote(arg) for arg in argv),
             "engines": "^22.22.2 || ^24.15.0 || >=26.0.0",
@@ -505,7 +653,20 @@ def normalise_options(facts, kwargs):
     opts["publish_package_manager"] = opts.get("publish_package_manager") or detect_package_manager(
         facts.get("repo", ".")
     )
-    opts["tag_prefix"] = tag_prefix_for(facts, opts.get("tag_prefix"))
+
+    # A declared version often arrives with the tag prefix still attached, e.g.
+    # V5.1.7.12_weiyuan_G200464803_20261016_8aef61de.  release-it would coerce that whole
+    # string to 5.1.7, so the prefix is moved to git.tagName where it belongs.  This is
+    # safe by construction: the tag that results is exactly the string that was declared.
+    given_prefix = opts.get("tag_prefix")
+    split_off, remainder = split_prefix(opts.get("version"))
+    if split_off:
+        opts["version"] = remainder
+        opts["declared_prefix_split"] = split_off
+    if split_off and given_prefix is None:
+        opts["tag_prefix"] = split_off
+    else:
+        opts["tag_prefix"] = tag_prefix_for(facts, given_prefix)
     opts["state_dir"] = opts.get("state_dir") or str(default_state_dir(facts.get("repo", ".")))
 
     current = facts.get("version") or "0.0.0"
@@ -520,6 +681,9 @@ def normalise_options(facts, kwargs):
     )
     opts["version"] = version
     opts["version_source"] = source
+    if source == "declared":
+        # npm cannot carry a non-semver version at all, so nothing can be published.
+        opts["publish"] = False
     opts["tag"] = "%s%s" % (opts["tag_prefix"], version)
     return opts
 
@@ -627,9 +791,14 @@ def main(argv=None):
         kwargs.pop(key, None)
     kwargs["notes_text"] = notes_text
 
-    plan = build_plan(args.repo, **kwargs)
+    try:
+        plan = build_plan(args.repo, **kwargs)
+    except VersionError as exc:
+        # A version the skill cannot carry safely is a refusal, never a traceback:
+        # exit 2 means "nothing was released and nothing will be".
+        print("ERROR: %s" % exc, file=sys.stderr)
+        return 2
     written = write_state(plan)
-
     output = Path(args.output).expanduser() if args.output else Path(plan["state"]["dir"]) / "release-plan.json"
     output.parent.mkdir(parents=True, exist_ok=True)
     payload = {key: value for key, value in plan.items() if key != "notes_text"}

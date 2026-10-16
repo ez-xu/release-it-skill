@@ -13,7 +13,11 @@ run that cannot prove that publishes nothing.
 
 ## Requirements
 
-- `release-it` 21.1.1 — resolved from `node_modules/.bin`, then `PATH`, then `npx --yes release-it@21.1.1`
+- `release-it` 21.1.1 — resolved from `node_modules/.bin`, then `PATH`, then `npx --yes release-it@21.1.1`.
+  A declared non-semver version additionally requires the fork
+  [`ez-xu/release-it`](https://github.com/ez-xu/release-it) (`npm install --global github:ez-xu/release-it`);
+  the skill proves the installed copy carries the fix and otherwise falls back to
+  `npx --yes github:ez-xu/release-it`
 - Node — `release-it` 21.1.1 declares `^22.22.2 || ^24.15.0 || >=26.0.0`
 - `git` 2.40 or newer
 - `gh` for GitHub remotes, `glab` for GitLab remotes
@@ -83,10 +87,43 @@ That builds a throwaway repository in the temp directory, points `origin` at a
 local bare repository, and runs the whole release for real without contacting a
 registry or a platform API.
 
+## Declared versions
+
+Firmware and embedded releases are named by a string that is not a semantic version:
+
+```
+5.1.7.12_weiyuan_G200464803_20261016_8aef61de
+V5.1.7.12_weiyuan_G200464803_20261016_8aef61de
+```
+
+`ez-xu/release-it` keeps such a string verbatim, and this skill treats it as a **declared
+version** — carried unchanged, never compared, never incremented:
+
+```bash
+cat > spec.json <<'JSON'
+{
+  "mode": "release",
+  "repo": ".",
+  "version": "V5.1.7.12_weiyuan_G200464803_20261016_8aef61de",
+  "publish": false
+}
+JSON
+
+python3 scripts/run_pipeline.py --input spec.json --output release-report.json
+```
+
+A leading `v`/`V` is moved into the tag name, so the tag is exactly the string that was
+declared. npm cannot carry such a version, so publishing is switched off, no release commit
+is created (release-it tags the commit already at `HEAD`), and `manifest-version` and
+`commit-subject` are reported as `skipped` rather than passed. A string release-it would
+coerce away instead of keeping — `release-2026.1` — is refused with exit 2 and the corrected
+command. See [`references/declared-versions.md`](references/declared-versions.md).
+
 ## What it refuses
 
 Dirty working tree, no upstream, detached HEAD, unreadable manifest, a version
-that is not strictly newer than the latest tag and the manifest, or a tag that
+that is not strictly newer than the latest tag and the manifest, a version
+release-it would silently coerce into something else, or a tag that
 already exists on `origin`. Refusal exits 2 and leaves HEAD, the tags, the remote
 refs and the manifest byte-for-byte unchanged.
 
@@ -99,6 +136,7 @@ refs and the manifest byte-for-byte unchanged.
 - [`references/interfaces-hooks.md`](references/interfaces-hooks.md) — the six lifecycle hooks and their order
 - [`references/interfaces-api.md`](references/interfaces-api.md) — the programmatic Node API
 - [`references/interfaces-matrix.md`](references/interfaces-matrix.md) — option-to-plugin-to-hook index
+- [`references/declared-versions.md`](references/declared-versions.md) — non-semver declared versions, the fork's rule, and what npm and the templates can carry
 - [`references/_recon-facts.md`](references/_recon-facts.md) — what was verified and what could not be
 
 ## Evals
@@ -107,7 +145,7 @@ refs and the manifest byte-for-byte unchanged.
 python3 scripts/run_evals.py --rollout --include-holdout
 ```
 
-Six golden cases (one held out) across six criteria, all graded by
+Seven golden cases (one held out) across six criteria, all graded by
 `scripts/eval_check.py`. Every case runs the real pipeline against a throwaway
 repository.
 

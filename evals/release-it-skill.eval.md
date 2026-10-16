@@ -99,6 +99,16 @@ silently stops checking anything is worse than no eval.
       "text": "Without a readable manifest the version is unknowable, so the run refuses rather than guessing."
     },
     {
+      "id": "declared-version",
+      "input": "golden/declared-version/input.json",
+      "expected": null,
+      "expected_status": "pending-first-green",
+      "split": "val",
+      "compare": "exact",
+      "compare_ignore": ["reason", "blockers", "notes_chars", "checks", "failed_checks", "release_record", "error", "before", "after", "tag_commit", "remote_tag_commit", "stdout_tail"],
+      "text": "A declared non-semver version (V5.1.7.12_weiyuan_...) is released verbatim: the V becomes the tag prefix, the tag is the declared string, and npm is switched off because it cannot carry that version."
+    },
+    {
       "id": "explicit-version",
       "input": "golden/explicit-version/input.json",
       "expected": null,

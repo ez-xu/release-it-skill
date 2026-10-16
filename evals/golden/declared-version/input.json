@@ -1,0 +1,9 @@
+{
+  "id": "declared-version",
+  "scenario": "clean",
+  "mode": "release",
+  "version": "V5.1.7.12_weiyuan_G200464803_20261016_8aef61de",
+  "publish": false,
+  "expect": "released",
+  "why": "A declared non-semver version is carried verbatim. The leading V is moved into the tag name (release-it would otherwise coerce the whole string to 5.1.7), so the tag is exactly the string that was declared, and because npm cannot carry such a version the npm plugin is switched off and the tag names the commit that was already HEAD."
+}

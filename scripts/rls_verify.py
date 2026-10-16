@@ -169,10 +169,19 @@ def verify(plan, record=None, timeout=90, offline=False):
            head_sha or None)
 
     # --- the manifest inside that commit --------------------------------- #
+    # A declared non-semver version has no manifest carrier: npm refuses such a version,
+    # so the npm plugin is switched off and package.json deliberately keeps its previous
+    # version.  The check is skipped with that reason, never reported as a pass.
+    declared = plan.get("version_source") == "declared"
     manifest_ok = False
     manifest_detail = "no manifest"
     manifest_version = None
-    if manifest:
+    if declared:
+        manifest_detail = (
+            "the version is declared verbatim and npm cannot carry it, so no manifest was "
+            "written for this release"
+        )
+    elif manifest:
         rel = Path(manifest)
         try:
             rel = rel.relative_to(Path(repo))
@@ -188,13 +197,24 @@ def verify(plan, record=None, timeout=90, offline=False):
             manifest_detail = "HEAD:%s has version %r, expected %r" % (rel.as_posix(), manifest_version, version)
         else:
             manifest_detail = "git show HEAD:%s failed" % rel.as_posix()
-    _check(checks, "manifest-version", manifest_ok, manifest_detail, manifest_version)
+    _check(checks, "manifest-version", manifest_ok, manifest_detail, manifest_version,
+           required=not declared, skipped=declared)
 
-    expected_subject = _render(plan["config"]["git"].get("commitMessage"), version)
     subject, subject_ok = git_ok(repo, "log", "-1", "--pretty=%s")
     subject = subject.strip() if subject_ok else ""
-    _check(checks, "commit-subject", subject == expected_subject,
-           "HEAD subject %r, expected %r" % (subject, expected_subject), subject or None)
+
+    # A declared version disables the npm plugin, so nothing in the repository changes and
+    # release-it creates no release commit: the tag deliberately names the commit that was
+    # already HEAD.  The head-commit check above is what proves the tag and HEAD agree.
+    if declared:
+        _check(checks, "commit-subject", False,
+               "no release commit is created for a declared version, so the tag names the "
+               "commit that was already HEAD (%s)" % (subject or "?"),
+               required=False, skipped=True)
+    else:
+        expected_subject = _render(plan["config"]["git"].get("commitMessage"), version)
+        _check(checks, "commit-subject", subject == expected_subject,
+               "HEAD subject %r, expected %r" % (subject, expected_subject), subject or None)
 
     # --- the notes ------------------------------------------------------- #
     notes_path = Path(plan["state"]["notes"])
@@ -204,7 +224,7 @@ def verify(plan, record=None, timeout=90, offline=False):
 
     links = plan.get("links") or {}
     required_links = ["repository", "tag", "release", "compare"]
-    if plan.get("package"):
+    if plan.get("package") and not declared:
         required_links.append("package")
     missing = [key for key in required_links if not links.get(key)]
     _check(checks, "links-complete", not missing,

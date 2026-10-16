@@ -18,6 +18,8 @@ import json
 import sys
 from pathlib import Path
 
+from rls_version import is_semver
+
 CRITERIA = (
     "harnessRan",
     "expectationMet",
@@ -91,7 +93,10 @@ def closed_loop_consistent(v):
     if v.get("remote_tag_commit") and v["remote_tag_commit"] != v.get("tag_commit"):
         problems.append("origin has the tag at %s, locally it is %s"
                         % (v["remote_tag_commit"][:12], (v.get("tag_commit") or "?")[:12]))
-    if v.get("version") and v.get("after", {}).get("version") != v["version"]:
+    # A declared non-semver version has no manifest carrier: npm cannot hold such a
+    # version, so the npm plugin is switched off and package.json deliberately keeps its
+    # previous value.  The manifest clause therefore only applies to semantic versions.
+    if v.get("version") and is_semver(str(v["version"])) and v.get("after", {}).get("version") != v["version"]:
         problems.append("the manifest says %s but the release is %s"
                         % (v.get("after", {}).get("version"), v["version"]))
     if problems:

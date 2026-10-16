@@ -31,6 +31,18 @@ INCREMENTS = (
     "prerelease",
 )
 
+# A declared version is a release identifier that is not a semantic version, e.g.
+# 5.1.7.12_weiyuan_G200464803_20261016_8aef61de.  ez-xu/release-it keeps such a version
+# verbatim (upstream truncates it to the leading semver), so the skill treats it as a
+# first-class version: carried unchanged, never compared, never incremented.
+#
+# release-it decides "verbatim" with semver.coerce(): it keeps the string only when the
+# coerced semver is a true *prefix* and what follows continues numerically.  Everything
+# else is silently rewritten, which for a release means a tag nobody asked for -- so the
+# cases release-it would rewrite are refused here with the exact corrected command.
+_COERCE = re.compile(r"(?:^|[^\d])(\d{1,16})(?:\.(\d{1,16}))?(?:\.(\d{1,16}))?")
+_CONTINUATION = re.compile(r"^[.-]?\d")
+
 # Conventional Commits type -> (section title, order).  Anything unlisted lands in
 # "Other changes" so that a non-conforming history is never silently truncated.
 SECTIONS = {
@@ -79,6 +91,57 @@ def render(parts):
     if parts.get("build"):
         text += "+" + parts["build"]
     return text
+
+
+def is_semver(version):
+    """True for a strict semantic version."""
+    return bool(_SEMVER.match(str(version or "").strip()))
+
+
+def coerce(version):
+    """The semantic version release-it would coerce ``version`` into, or None.
+
+    Mirrors semver.coerce(): the first run of up to three numbers, padded to three parts.
+    """
+    match = _COERCE.search(str(version or "").strip())
+    if not match:
+        return None
+    parts = [group for group in match.groups() if group is not None]
+    while len(parts) < 3:
+        parts.append("0")
+    return "%d.%d.%d" % tuple(int(part) for part in parts[:3])
+
+
+def is_declared(version):
+    """True when release-it keeps ``version`` verbatim instead of coercing it."""
+    text = str(version or "").strip()
+    if not text or is_semver(text):
+        return False
+    coerced = coerce(text)
+    if not coerced or not text.startswith(coerced):
+        return False
+    return bool(_CONTINUATION.match(text[len(coerced) :]))
+
+
+def coercion_of(version):
+    """The version release-it would silently substitute, or None when it keeps it."""
+    text = str(version or "").strip()
+    if is_semver(text) or is_declared(text):
+        return None
+    return coerce(text)
+
+
+def split_prefix(version):
+    """Split a leading v/V that release-it would drop into a coercion.
+
+    ``V5.1.7.12_weiyuan_...`` is a *tag name*: release-it would coerce the whole string to
+    ``5.1.7``.  Returned as ``(prefix, version)`` so the prefix can be expressed where it
+    belongs (``git.tagName``) and the version stays verbatim.
+    """
+    text = str(version or "").strip()
+    if text[:1] in ("v", "V") and is_declared(text[1:]):
+        return text[0], text[1:]
+    return "", text
 
 
 def compare(left, right):
@@ -226,11 +289,34 @@ def render_notes(version, rows, previous_tag="", package=None, repository_url=""
 
 
 def resolve_version(current, increment=None, version=None, pre_release_id=None, pre_release_base=None):
-    """Return the version the release carries, with how it was derived."""
+    """Return the version the release carries, with how it was derived.
+
+    A declared non-semver version is carried verbatim and is never compared or
+    incremented: it has no ordering, so an increment cannot apply to it.  Anything
+    release-it would silently coerce is refused rather than truncated, because the tag
+    that resulted would not be the tag that was asked for.
+    """
     if version:
         explicit = str(version).strip()
-        parse(explicit)
-        return explicit, "explicit"
+        if is_semver(explicit):
+            return explicit, "explicit"
+        if is_declared(explicit):
+            return explicit, "declared"
+        coerced = coercion_of(explicit)
+        if coerced:
+            raise VersionError(
+                "%r is not a version release-it keeps: it would silently release %r. "
+                "release-it uses a version verbatim only when the semantic part is a true "
+                "prefix and the rest continues with a digit or a separator, e.g. "
+                "5.1.7.12_weiyuan_G200464803_20261016_8aef61de." % (explicit, coerced)
+            )
+        raise VersionError("not a semantic version: %r" % (explicit,))
     if increment:
+        if not is_semver(current):
+            raise VersionError(
+                "the latest version %r is not a semantic version, so the increment %r cannot "
+                "be applied to it. Declare the exact version instead, e.g. "
+                "--version 5.1.7.12_weiyuan_G200464803_20261016_8aef61de." % (current, increment)
+            )
         return bump(current, increment, pre_release_id, pre_release_base), "increment:%s" % increment
     return current, "current"

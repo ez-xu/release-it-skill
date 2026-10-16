@@ -13,9 +13,21 @@
       "type": "package_file"
     },
     {
+      "id": "gitattributes",
+      "path": ".gitattributes",
+      "sha256": "5ab41e9e53d9aa3d9b9c38ca1b07bf03ffa1d7cb7d31d6ea6d7aea799468bb3e",
+      "type": "package_file"
+    },
+    {
+      "id": "gitignore",
+      "path": ".gitignore",
+      "sha256": "0ea33f54da962e081585664bf6e629da70bf31a84d2c08286dc85f83e1482d2b",
+      "type": "package_file"
+    },
+    {
       "id": "agents_document",
       "path": "AGENTS.md",
-      "sha256": "a5955370df76a22aeabaa509c2a4669c3c27a866e4e3170d9e4027670ee85ee2",
+      "sha256": "c5d6ef66a388cb232a180e1ecbc2808c7bdbbe43426c820dad4b1ec0f7d1edb8",
       "type": "companion_instruction"
     },
     {
@@ -46,6 +58,18 @@
       "id": "clean_minor_input",
       "path": "evals/golden/clean-minor/input.json",
       "sha256": "762d4ebc9b69f06e9de819fb69f916a7be976324f0237386a50a0b63a5b061d4",
+      "type": "golden_input"
+    },
+    {
+      "id": "declared_version_expected",
+      "path": "evals/golden/declared-version/expected.json",
+      "sha256": "1a846cffd53a046823c280339204676a5954145e21e17ffbe36efe1945b5b316",
+      "type": "expected_output"
+    },
+    {
+      "id": "declared_version_input",
+      "path": "evals/golden/declared-version/input.json",
+      "sha256": "c9417b0e6a85d1c88c04d249be7d9103ba06df6e3eb4dd04773fcaf47765e45b",
       "type": "golden_input"
     },
     {
@@ -105,8 +129,14 @@
     {
       "id": "evals_release_it_skill_eval_md",
       "path": "evals/release-it-skill.eval.md",
-      "sha256": "12512b123b9b91adbdf6b237e2f4d90eeac39f3376b431571a500980b35679a6",
+      "sha256": "629e43e5924e5cb9db6a2f8840dd8515602abfea64cd8a883dad12db3f81a492",
       "type": "eval_spec"
+    },
+    {
+      "id": "evolution_md",
+      "path": "EVOLUTION.md",
+      "sha256": "7d555d24d5229ea500216926e6604659efe9a1144c745db84eb3bdeb06af2d11",
+      "type": "package_file"
     },
     {
       "id": "install_ps1",
@@ -129,13 +159,19 @@
     {
       "id": "readme_md",
       "path": "README.md",
-      "sha256": "c0d99ebf66410f38bb1e32be2eda9609864a4676f418fe0bb13b839f57f1a7af",
+      "sha256": "5cfa5df40f92270b0fb8bbe18c42a4a44600182a5ac29b8cd4eba2f43a5287b3",
       "type": "package_file"
     },
     {
       "id": "references_recon_facts_md",
       "path": "references/_recon-facts.md",
       "sha256": "155fe60cd0aa5accb1984986a5f12fda79f862e2a4dc1be01d35e681d732dc0f",
+      "type": "reference"
+    },
+    {
+      "id": "references_declared_versions_md",
+      "path": "references/declared-versions.md",
+      "sha256": "5937167f5ef116bc4518a2d36f758baa7bb639fb06eeb9cd8d8ab80d802a620f",
       "type": "reference"
     },
     {
@@ -183,7 +219,7 @@
     {
       "id": "scripts_eval_check_py",
       "path": "scripts/eval_check.py",
-      "sha256": "60e88de45eceadcce3a533ef8414d0fd6d7e851b4cc2ea29288e43f384098370",
+      "sha256": "160da5a6e644c4d5e8c7284569b7b5882792f2d0c0264543b88d3815dd368f2d",
       "type": "script"
     },
     {
@@ -219,7 +255,7 @@
     {
       "id": "scripts_rls_plan_py",
       "path": "scripts/rls_plan.py",
-      "sha256": "4908bc865d15a8a6324e71ad3fdb9b6b02cb1e54b948cf9a18fed157f7af21eb",
+      "sha256": "23482e93f65d9d6c611b47034223bd9941104d4958f1bb33be0d46876b2ead47",
       "type": "script"
     },
     {
@@ -249,13 +285,13 @@
     {
       "id": "scripts_rls_verify_py",
       "path": "scripts/rls_verify.py",
-      "sha256": "55ebe170e7a8bcd6f9d6171b30f647ea7033229611b95d08a7000303651af692",
+      "sha256": "ff554c7bed7fd3a130c4131c0b8648a0754223289722471a0fa18e0e1f954fc7",
       "type": "script"
     },
     {
       "id": "scripts_rls_version_py",
       "path": "scripts/rls_version.py",
-      "sha256": "78bb5066aa276670a7896bf5254b352fcabdb70a3c3617f2555651f70ec3e0e7",
+      "sha256": "48907c4c668cfc6b5f5955d7c34f79c3bc1cb822694c474ed7a5c2ee4d880982",
       "type": "script"
     },
     {
@@ -303,8 +339,14 @@
     {
       "id": "skill_document",
       "path": "SKILL.md",
-      "sha256": "099e68f61e858018fb0a81f8bfa56c35e1049816c65966eff553a3a4efcd2fb3",
+      "sha256": "63a93f04d5dacffb476bb3b23fb7fe3ab41f330359fef455dc4f629c6e7f2d0c",
       "type": "instruction"
+    },
+    {
+      "id": "verification_md",
+      "path": "VERIFICATION.md",
+      "sha256": "ecc2ab302f3ec078b72f980c710750ab4098489927db145013535e1b96506b0b",
+      "type": "package_file"
     },
     {
       "id": "wiki_index_md",
@@ -352,6 +394,11 @@
       "to": "pipeline"
     },
     {
+      "from": "declared_version_input",
+      "relation": "consumed_by",
+      "to": "pipeline"
+    },
+    {
       "from": "dirty_refusal_input",
       "relation": "consumed_by",
       "to": "pipeline"
@@ -375,6 +422,11 @@
       "from": "pipeline",
       "relation": "compared_against",
       "to": "clean_minor_expected"
+    },
+    {
+      "from": "pipeline",
+      "relation": "compared_against",
+      "to": "declared_version_expected"
     },
     {
       "from": "pipeline",

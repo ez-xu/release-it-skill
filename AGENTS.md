@@ -9,10 +9,12 @@ with exit 2 and publishes nothing when that cannot be proven.
 Use it when a repository must be released and the result must be inspected
 afterwards: 帮我发布一个版本, 打标签并发布, 生成发布说明, bump and publish,
 cut a release, tag and create a release with notes, publish this package to npm.
+It also releases a **declared** non-semver version verbatim, such as
+`V5.1.7.12_weiyuan_G200464803_20261016_8aef61de`.
 
-Do not use it for firmware or embedded releases, for pushing a group of
-repositories (that is `push-release-pipeline-skill`), for authoring a CHANGELOG by
-hand, or to repair a tag that has already been published.
+Do not use it to build and attach a compiled firmware or binary artifact (that is
+`push-release-pipeline-skill`), to push a group of repositories at once, to author a
+CHANGELOG by hand, or to repair a tag that has already been published.
 
 ## Run
 
@@ -27,6 +29,10 @@ python3 scripts/run_pipeline.py --input spec.json --output release-plan.json
 Change `mode` to `release` to publish, `verify` to read an existing release back,
 or `fixture` to exercise the whole pipeline against a throwaway repository that
 never leaves the machine.
+
+For a declared version, put the exact string in `version` and set `"publish": false`:
+`{ "mode": "release", "repo": ".", "version": "5.1.7.12_weiyuan_G200464803_20261016_8aef61de", "publish": false }`.
+A leading `v`/`V` is split into the tag name, so the tag is still the declared string.
 
 | Exit | Meaning |
 | --- | --- |
@@ -49,9 +55,19 @@ never leaves the machine.
 - The generated configuration and notes live in `<git dir>/release-it-skill/`, not
   in the working tree, because release-it's own `git.requireCleanWorkingDir` would
   otherwise refuse the release.
+- A declared version cannot go through npm: `npm version 5.1.7.12_weiyuan_…` dies with
+  `Invalid version` and takes the whole run down before the tag exists. This skill
+  passes `--no-npm`, so nothing changes in the repository and release-it tags the
+  commit already at `HEAD` (no release commit is created).
+- `${version}` is truncated in `git.commitMessage` and `git.tagAnnotation`
+  (`parseVersion()` keeps only `5.1.7`); the skill substitutes the literal itself.
+- Only `ez-xu/release-it` keeps a declared version verbatim — upstream 21.1.1 coerces
+  it. The skill reads the installed `lib/plugin/version/Version.js` to prove the fix is
+  there and otherwise falls back to `npx --yes github:ez-xu/release-it`.
 
 ## Full detail
 
 `SKILL.md` carries the required behaviour and the complete gotcha list;
 `references/` documents every `release-it` interface (CLI, configuration, plugins,
-hooks, programmatic API, and an option-to-plugin index) for version 21.1.1.
+hooks, programmatic API, and an option-to-plugin index) for version 21.1.1, plus
+`declared-versions.md` for non-semver release identifiers.

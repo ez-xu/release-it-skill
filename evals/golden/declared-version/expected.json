@@ -1,0 +1,188 @@
+{
+  "scenario": "declared-version",
+  "expect": "released",
+  "mode": "release",
+  "exit_code": 0,
+  "satisfied": true,
+  "reason": "released V5.1.7.12_weiyuan_G200464803_20261016_8aef61de at cfa48fd777a9; every deliverable agrees",
+  "verdict": "web-pending",
+  "consistent": true,
+  "refused": [],
+  "blockers": [],
+  "tag": "V5.1.7.12_weiyuan_G200464803_20261016_8aef61de",
+  "version": "5.1.7.12_weiyuan_G200464803_20261016_8aef61de",
+  "notes_chars": 357,
+  "notes_sections": [
+    "Features",
+    "Bug Fixes",
+    "Documentation"
+  ],
+  "release_record": {
+    "argv": [
+      "release-it",
+      "--ci",
+      "--config",
+      "C:\\Users\\15854\\AppData\\Local\\Temp\\release-it-skill-evals\\declared-version\\.git\\release-it-skill\\release-it.json",
+      "--no-npm",
+      "5.1.7.12_weiyuan_G200464803_20261016_8aef61de"
+    ],
+    "display": "release-it --ci --config C:\\Users\\15854\\AppData\\Local\\Temp\\release-it-skill-evals\\declared-version\\.git\\release-it-skill\\release-it.json --no-npm 5.1.7.12_weiyuan_G200464803_20261016_8aef61de",
+    "cwd": "C:\\Users\\15854\\AppData\\Local\\Temp\\release-it-skill-evals\\declared-version",
+    "exit_code": 0,
+    "duration_s": 3.09,
+    "classification": "web-pending",
+    "release_link": "https:///Users/15854/AppData/Local/Temp/release-it-skill-evals/declared-version-remote/releases/new?tag=V5.1.7.12_weiyuan_G200464803_20261016_8aef61de&title=Release+5.1.7.12_weiyuan_G200464803_20261016_8aef61de&body=%23%23+Release+5.1.7.12_weiyuan_G200464803_20261016_8aef61de%0D%0A%0D%0APackage%3A+%60release-it-skill-fixture%60%0D%0A%0D%0AChanges+since+%60v1.0.0%60.%0D%0A%0D%0A%23%23%23+Features%0D%0A%0D%0A*+record+the+published+package+link+%28cfa48fd%29%0D%0A*+add+release+plan+builder+%2862279a4%29%0D%0A%0D%0A%23%23%23+Bug+Fixes%0D%0A%0D%0A*+keep+the+tag+prefix+when+the+latest+tag+has+one+%28e2aa6c6%29%0D%0A%0D%0A%23%23%23+Documentation%0D%0A%0D%0A*+describe+the+release+interfaces+%28a6a1303%29&prerelease=false",
+    "warnings": [
+      "Environment variable \"GITHUB_TOKEN\" is required for automated GitHub Releases.",
+      "Falling back to web-based GitHub Release.",
+      "No changes to commit. The latest commit will be tagged."
+    ],
+    "errors": [],
+    "token_warning": true,
+    "web_fallback": true,
+    "stdout_tail": "🚀 Let's release declared-version-remote (0.0.0...5.1.7.12_weiyuan_G200464803_20261016_8aef61de)\nChangelog:\n## Release 5.1.7.12_weiyuan_G200464803_20261016_8aef61de\nPackage: `release-it-skill-fixture`\nChanges since `v1.0.0`.\n### Features\n* record the published package link (cfa48fd)\n* add release plan builder (62279a4)\n### Bug Fixes\n* keep the tag prefix when the latest tag has one (e2aa6c6)\n### Documentation\n* describe the release interfaces (a6a1303)\nEmpty changeset\n\nOn branch main\nYour branch is ahead of 'origin/main' by 4 commits.\n  (use \"git push\" to publish your local commits)\n\nnothing to commit, working tree clean\n\n🔗 https:///Users/15854/AppData/Local/Temp/release-it-skill-evals/declared-version-remote/releases/new?tag=V5.1.7.12_weiyuan_G200464803_20261016_8aef61de&title=Release+5.1.7.12_weiyuan_G200464803_20261016_8aef61de&body=%23%23+Release+5.1.7.12_weiyuan_G200464803_20261016_8aef61de%0D%0A%0D%0APackage%3A+%60release-it-skill-fixture%60%0D%0A%0D%0AChanges+since+%60v1.0.0%60.%0D%0A%0D%0A%23%23%23+Features%0D%0A%0D%0A*+record+the+published+package+link+%28cfa48fd%29%0D%0A*+add+release+plan+builder+%2862279a4%29%0D%0A%0D%0A%23%23%23+Bug+Fixes%0D%0A%0D%0A*+keep+the+tag+prefix+when+the+latest+tag+has+one+%28e2aa6c6%29%0D%0A%0D%0A%23%23%23+Documentation%0D%0A%0D%0A*+describe+the+release+interfaces+%28a6a1303%29&prerelease=false\n🏁 Done (in 2s.)\n",
+    "stderr_tail": "WARNING Environment variable \"GITHUB_TOKEN\" is required for automated GitHub Releases.\nWARNING Falling back to web-based GitHub Release.\n- Git commit\nWARNING No changes to commit. The latest commit will be tagged.\n✔ Git commit\n- Git tag\n✔ Git tag\n- Git push\n✔ Git push\n- Generating link to GitHub Release web interface\n✔ Generating link to GitHub Release web interface\n",
+    "written": {
+      "config": "C:\\Users\\15854\\AppData\\Local\\Temp\\release-it-skill-evals\\declared-version\\.git\\release-it-skill\\release-it.json",
+      "notes": "C:\\Users\\15854\\AppData\\Local\\Temp\\release-it-skill-evals\\declared-version\\.git\\release-it-skill\\release-notes.md",
+      "printer": "C:\\Users\\15854\\AppData\\Local\\Temp\\release-it-skill-evals\\declared-version\\.git\\release-it-skill\\print-notes.mjs"
+    }
+  },
+  "links": {
+    "repository": "https://github.com/ez-xu/release-it-skill-fixture",
+    "tag": "https://github.com/ez-xu/release-it-skill-fixture/releases/tag/V5.1.7.12_weiyuan_G200464803_20261016_8aef61de",
+    "release": "https://github.com/ez-xu/release-it-skill-fixture/releases/tag/V5.1.7.12_weiyuan_G200464803_20261016_8aef61de",
+    "package": "",
+    "registry": "",
+    "compare": "https://github.com/ez-xu/release-it-skill-fixture/compare/v1.0.0...V5.1.7.12_weiyuan_G200464803_20261016_8aef61de",
+    "api": "https://api.github.com/repos/ez-xu/release-it-skill-fixture/releases/tags/V5.1.7.12_weiyuan_G200464803_20261016_8aef61de",
+    "package_published": false
+  },
+  "checks": [
+    {
+      "id": "tag-local",
+      "ok": true,
+      "detail": "git rev-parse --verify refs/tags/V5.1.7.12_weiyuan_G200464803_20261016_8aef61de",
+      "value": "58d6199dd541b5d021760450d317780bceb841e5",
+      "required": true,
+      "skipped": false
+    },
+    {
+      "id": "tag-dereference",
+      "ok": true,
+      "detail": "git rev-list -n 1 V5.1.7.12_weiyuan_G200464803_20261016_8aef61de (annotated tags are two objects)",
+      "value": "cfa48fd777a9a440f6b0a8428dcca32e4a93a0f8",
+      "required": true,
+      "skipped": false
+    },
+    {
+      "id": "tag-remote",
+      "ok": true,
+      "detail": "origin has V5.1.7.12_weiyuan_G200464803_20261016_8aef61de at cfa48fd777a9a440f6b0a8428dcca32e4a93a0f8",
+      "value": "cfa48fd777a9a440f6b0a8428dcca32e4a93a0f8",
+      "required": true,
+      "skipped": false
+    },
+    {
+      "id": "head-commit",
+      "ok": true,
+      "detail": "HEAD cfa48fd777a9a440f6b0a8428dcca32e4a93a0f8 must be the commit the tag dereferences to (cfa48fd777a9a440f6b0a8428dcca32e4a93a0f8)",
+      "value": "cfa48fd777a9a440f6b0a8428dcca32e4a93a0f8",
+      "required": true,
+      "skipped": false
+    },
+    {
+      "id": "manifest-version",
+      "ok": false,
+      "detail": "the version is declared verbatim and npm cannot carry it, so no manifest was written for this release",
+      "value": null,
+      "required": false,
+      "skipped": true
+    },
+    {
+      "id": "commit-subject",
+      "ok": false,
+      "detail": "no release commit is created for a declared version, so the tag names the commit that was already HEAD (feat: record the published package link)",
+      "value": null,
+      "required": false,
+      "skipped": true
+    },
+    {
+      "id": "notes-non-empty",
+      "ok": true,
+      "detail": "release-notes.md is 357 characters",
+      "value": 357,
+      "required": true,
+      "skipped": false
+    },
+    {
+      "id": "links-complete",
+      "ok": true,
+      "detail": "recorded repository, tag, release, compare",
+      "value": [
+        "api",
+        "compare",
+        "package",
+        "package_published",
+        "registry",
+        "release",
+        "repository",
+        "tag"
+      ],
+      "required": true,
+      "skipped": false
+    },
+    {
+      "id": "release-api",
+      "ok": false,
+      "detail": "github is not authenticated; release-it fell back to the web release form",
+      "value": null,
+      "required": false,
+      "skipped": true
+    },
+    {
+      "id": "package-registry",
+      "ok": true,
+      "detail": "publishing is switched off",
+      "value": null,
+      "required": false,
+      "skipped": true
+    }
+  ],
+  "failed_checks": [],
+  "error": "",
+  "before": {
+    "head": "cfa48fd777a9a440f6b0a8428dcca32e4a93a0f8",
+    "tags": [
+      "v1.0.0"
+    ],
+    "remote_refs": [
+      "refs/tags/v1.0.0",
+      "refs/tags/v1.0.0^{}"
+    ],
+    "manifest_blob": "be3a13c1737935f5fa01013a8da871774d903e1f",
+    "version": "1.0.0"
+  },
+  "after": {
+    "head": "cfa48fd777a9a440f6b0a8428dcca32e4a93a0f8",
+    "tags": [
+      "V5.1.7.12_weiyuan_G200464803_20261016_8aef61de",
+      "v1.0.0"
+    ],
+    "remote_refs": [
+      "refs/tags/V5.1.7.12_weiyuan_G200464803_20261016_8aef61de",
+      "refs/tags/V5.1.7.12_weiyuan_G200464803_20261016_8aef61de^{}",
+      "refs/tags/v1.0.0",
+      "refs/tags/v1.0.0^{}"
+    ],
+    "manifest_blob": "be3a13c1737935f5fa01013a8da871774d903e1f",
+    "version": "1.0.0"
+  },
+  "added_tags": [
+    "V5.1.7.12_weiyuan_G200464803_20261016_8aef61de"
+  ],
+  "untouched": false,
+  "tag_commit": "cfa48fd777a9a440f6b0a8428dcca32e4a93a0f8",
+  "remote_tag_commit": "cfa48fd777a9a440f6b0a8428dcca32e4a93a0f8",
+  "stdout_tail": "-evals\\declared-version\\package.json keeps its current version and no package link is recorded\nwarning: '5.1.7.12_weiyuan_G200464803_20261016_8aef61de' is not a semantic version: it is released verbatim, its ordering cannot be checked against the latest tag, and no increment can be derived from it\nwarning: with the npm plugin disabled nothing in the repository changes, so release-it creates no release commit and tags the commit that is already HEAD\nwarning: node 24.14.0 does not satisfy release-it github:ez-xu/release-it engines ^22.22.2 || ^24.15.0 || >=26.0.0; expect an engines warning and possibly a hard failure\nresult   web-pending (exit 0, 3.09s)\nverdict  Tag and commit verified; the platform release is still pending\n  tag-local          ok   git rev-parse --verify refs/tags/V5.1.7.12_weiyuan_G200464803_20261016_8aef61de\n  tag-dereference    ok   git rev-list -n 1 V5.1.7.12_weiyuan_G200464803_20261016_8aef61de (annotated tags are two objects)\n  tag-remote         ok   origin has V5.1.7.12_weiyuan_G200464803_20261016_8aef61de at cfa48fd777a9a440f6b0a8428dcca32e4a93a0f8\n  head-commit        ok   HEAD cfa48fd777a9a440f6b0a8428dcca32e4a93a0f8 must be the commit the tag dereferences to (cfa48fd777a9a440f6b0a8428dcca32e4a93a0f8)\n  manifest-version   skip the version is declared verbatim and npm cannot carry it, so no manifest was written for this release\n  commit-subject     skip no release commit is created for a declared version, so the tag names the commit that was already HEAD (feat: record the published package link)\n  notes-non-empty    ok   release-notes.md is 357 characters\n  links-complete     ok   recorded repository, tag, release, compare\n  release-api        skip github is not authenticated; release-it fell back to the web release form\n  package-registry   skip publishing is switched off\nreport   C:\\Users\\15854\\AppData\\Local\\Temp\\release-it-skill-evals\\release-report.md\nreport   C:\\Users\\15854\\AppData\\Local\\Temp\\release-it-skill-evals\\release-report.json\n"
+}

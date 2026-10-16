@@ -135,6 +135,12 @@ Useful spec keys: `mode`, `repo`, `increment` (`patch|minor|major|prepatch|premi
 `pre_release_id`, `pre_release_base`, `tag_prefix`, `manifest`, `sandbox`, `scenario`,
 `offline`, `allow_dirty`, `allow_no_upstream`, `publish_package_manager`, `state_dir`.
 
+`version` also accepts a **declared version** — a release identifier that is not semantic but
+that `ez-xu/release-it` keeps verbatim, such as `5.1.7.12_weiyuan_G200464803_20261016_8aef61de`
+or `V5.1.7.12_weiyuan_G200464803_20261016_8aef61de`. It is carried unchanged, never compared
+and never incremented, and a string release-it would silently coerce is refused instead. See
+`references/declared-versions.md`.
+
 Exit codes: **0** success, **2** refused (nothing was published), **1** failed.
 
 ## Required behavior
@@ -169,6 +175,12 @@ Exit codes: **0** success, **2** refused (nothing was published), **1** failed.
 9. Never write a token into the configuration or into an artifact. Tokens are read from
    `GITHUB_TOKEN` / `GITLAB_TOKEN` only, and every generated message passes through a
    redactor that strips `gh[pousr]_…`, `glpat-…` and `npm_…` before it is printed.
+10. Treat a **declared** version as a first-class version: carry it unchanged, never compare
+    it, never increment it. Refuse anything release-it would silently rewrite, naming the
+    corrected command. For a declared version the npm plugin is switched off, `${version}` is
+    substituted by the skill so no truncating template reaches release-it, the runner must be
+    shown to carry the fork's fix, and the checks that cannot apply are reported `skipped`
+    with their reason. See `references/declared-versions.md`.
 
 ## Gotchas
 
@@ -205,6 +217,25 @@ Exit codes: **0** success, **2** refused (nothing was published), **1** failed.
 - **`git` writes its object files read-only**, so `shutil.rmtree(..., ignore_errors=True)`
   silently leaves a sandbox behind on Windows and the next build dies with
   `FileExistsError: [WinError 183]`.
+- **A declared version belongs in the tag, not in the version string.** `V5.1.7.12_weiyuan_…`
+  is coerced by release-it's own semver code (`WARNING Coerced invalid semver version
+  "V5.1.7.12_weiyuan_…" into "5.1.7"`); only the bare `5.1.7.12_weiyuan_…` is kept verbatim.
+  This skill moves a leading `v`/`V` into `git.tagName`, so the tag is still exactly the
+  declared string, and warns that it did.
+- **npm cannot carry a declared version.** A real run against stock settings dies at the
+  manifest step with `npm error Invalid version: 5.1.7.12_weiyuan_…` and leaves nothing
+  behind — no commit, no tag. The skill passes `--no-npm` and switches publishing off, so the
+  npm plugin never runs.
+- **`${version}` is truncated in the commit message and the tag annotation.**
+  `git.commitMessage` and `git.tagAnnotation` are routed through `parseVersion()` in
+  `lib/utils.js`, which shortens a non-semver version to its prefix (`git commit --message
+  Release 5.1.7`). The skill substitutes the literal itself, so both carry the full string.
+- **With the npm plugin off there is no release commit to write.** Nothing in the repository
+  changes, so release-it tags the commit that is already `HEAD`; `commit-subject` is reported
+  `skipped` for a declared version instead of failing.
+- **Upstream release-it truncates a declared version.** The runner must carry the fork's fix
+  (`npm install github:ez-xu/release-it`). The skill proves it by reading the installed
+  `lib/plugin/version/Version.js` and otherwise falls back to `npx --yes github:ez-xu/release-it`.
 
 ## References
 
@@ -217,4 +248,5 @@ reference material, not steps to execute.
 - Read `references/interfaces-hooks.md` for the six lifecycle hooks and their exact order.
 - Read `references/interfaces-api.md` for the programmatic Node API (`runTasks`, `Config`, `Plugin`).
 - Read `references/interfaces-matrix.md` for the option-to-plugin-to-hook index.
+- Read `references/declared-versions.md` for non-semver declared versions: the fork's rule, the tag-prefix split, and what npm, the commit message and the release body can carry.
 - Read `references/_recon-facts.md` for what was verified, how, and the twelve things that could not be.
