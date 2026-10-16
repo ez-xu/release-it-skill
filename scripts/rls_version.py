@@ -259,31 +259,36 @@ def _order(title):
 
 
 def render_notes(version, rows, previous_tag="", package=None, repository_url=""):
-    """Render release notes as Markdown from commit rows."""
+    """Render release notes as a terse Markdown outline.
+
+    One requirement per line: every change is a single bullet carrying the subject it
+    was committed with, its short commit id and any issue it names.  The section
+    headings are the outline; nothing is explained in prose, and no boilerplate line
+    (the package, the comparison base) is repeated here — the report and the links
+    already carry those.  ``previous_tag``, ``package`` and ``repository_url`` are kept
+    in the signature for callers; only ``repository_url`` is used, to make an issue
+    reference a link that still renders as a short ``#12``.
+    """
     buckets = parse_commits(rows)
-    title = "Release %s" % version
-    lines = ["## %s" % title, ""]
-    if package:
-        lines.append("Package: `%s`" % package)
-        lines.append("")
-    if previous_tag:
-        lines.append("Changes since `%s`." % previous_tag)
-        lines.append("")
+    lines = ["## Release %s" % version, ""]
     if not rows:
-        lines.append("No commits since the previous tag.")
-        lines.append("")
+        lines.append("- no changes since the previous tag")
+        return "\n".join(lines).rstrip() + "\n"
     for name in sorted(buckets, key=_order):
         lines.append("### %s" % name)
-        lines.append("")
         for entry in buckets[name]:
-            label = "**%s:** " % entry["scope"] if entry["scope"] else ""
-            suffix = " (%s)" % entry["sha"]
-            refs = _ISSUE_REF.findall(entry["subject"])
-            if repository_url and refs:
-                suffix += " " + " ".join(
-                    "[#%s](%s/issues/%s)" % (ref, repository_url.rstrip("/"), ref) for ref in refs
-                )
-            lines.append("* %s%s%s" % (label, entry["text"], suffix))
+            # Collapse any whitespace so one requirement can never become two lines.
+            text = " ".join(str(entry["text"]).split())
+            prefix = "%s: " % entry["scope"] if entry["scope"] else ""
+            if repository_url:
+                # The subject already names its issue; make that mention a link rather
+                # than naming the issue a second time on the same line.
+                for ref in _ISSUE_REF.findall(entry["subject"]):
+                    text = text.replace(
+                        "#%s" % ref,
+                        "[#%s](%s/issues/%s)" % (ref, repository_url.rstrip("/"), ref),
+                    )
+            lines.append("- %s%s (%s)" % (prefix, text, entry["sha"]))
         lines.append("")
     return "\n".join(lines).rstrip() + "\n"
 

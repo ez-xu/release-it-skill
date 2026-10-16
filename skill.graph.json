@@ -291,7 +291,7 @@
     {
       "id": "scripts_rls_version_py",
       "path": "scripts/rls_version.py",
-      "sha256": "48907c4c668cfc6b5f5955d7c34f79c3bc1cb822694c474ed7a5c2ee4d880982",
+      "sha256": "f69b627ec3c3fb2c76bd4a2f2ef76e1e6bd976a51a7afb97dbcf57812be54ba0",
       "type": "script"
     },
     {
@@ -339,13 +339,13 @@
     {
       "id": "skill_document",
       "path": "SKILL.md",
-      "sha256": "63a93f04d5dacffb476bb3b23fb7fe3ab41f330359fef455dc4f629c6e7f2d0c",
+      "sha256": "89f3c33af0233f71ecfd3a4b05fee1a7be0bab0332c92c57fbb03554ef676824",
       "type": "instruction"
     },
     {
       "id": "verification_md",
       "path": "VERIFICATION.md",
-      "sha256": "ecc2ab302f3ec078b72f980c710750ab4098489927db145013535e1b96506b0b",
+      "sha256": "76bf80b6d5e2766f9bd1a0f163e96ea9c299c85456bac2fb83fa195e3eea4b7f",
       "type": "package_file"
     },
     {

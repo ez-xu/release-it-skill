@@ -160,9 +160,12 @@ Exit codes: **0** success, **2** refused (nothing was published), **1** failed.
    working tree** — the default is `<git dir>/release-it-skill/` — because release-it's
    own `git.requireCleanWorkingDir` would otherwise refuse the release the skill just
    configured.
-5. Generate the release notes from conventional commits since the previous tag, and hand
-   them to release-it as a command whose stdout is the notes. `releaseNotes` is executed
-   as a shell command, so a multi-line string cannot be passed as a config value.
+5. Generate the release notes from conventional commits since the previous tag, as a terse
+   outline: **one requirement per line** — a single bullet carrying the commit subject, its
+   short id and any issue it names — grouped under a `###` heading per commit type, with no
+   prose and no boilerplate repeated from the report. Hand them to release-it as a command
+   whose stdout is the notes; `releaseNotes` is executed as a shell command, so a multi-line
+   string cannot be passed as a config value.
 6. Run release-it once, non-interactively, with the version as the positional argument
    so nothing depends on a prompt or on the silent `patch` fallback that CI mode would
    otherwise choose.
