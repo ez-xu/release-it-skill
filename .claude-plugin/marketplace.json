@@ -1,0 +1,14 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "release-it-skill",
+  "owner": {
+    "name": "agent-skills-platform"
+  },
+  "plugins": [
+    {
+      "name": "release-it-skill",
+      "source": "./",
+      "description": "Release a repository with release-it 21.1.1 so the tag, the release notes, the published package and the recorded links all describe the same commit — or refuse and publish nothing."
+    }
+  ]
+}

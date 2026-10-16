@@ -1,0 +1,187 @@
+{
+  "scenario": "clean-minor",
+  "expect": "released",
+  "mode": "release",
+  "exit_code": 0,
+  "satisfied": true,
+  "reason": "released v1.1.0 at 2cf24a1a3ef9; every deliverable agrees",
+  "verdict": "web-pending",
+  "consistent": true,
+  "refused": [],
+  "blockers": [],
+  "tag": "v1.1.0",
+  "version": "1.1.0",
+  "notes_chars": 317,
+  "notes_sections": [
+    "Features",
+    "Bug Fixes",
+    "Documentation"
+  ],
+  "release_record": {
+    "argv": [
+      "release-it",
+      "--ci",
+      "--config",
+      "C:\\Users\\15854\\AppData\\Local\\Temp\\release-it-skill-evals\\clean-minor\\.git\\release-it-skill\\release-it.json",
+      "--no-npm.publish",
+      "1.1.0"
+    ],
+    "display": "release-it --ci --config C:\\Users\\15854\\AppData\\Local\\Temp\\release-it-skill-evals\\clean-minor\\.git\\release-it-skill\\release-it.json --no-npm.publish 1.1.0",
+    "cwd": "C:\\Users\\15854\\AppData\\Local\\Temp\\release-it-skill-evals\\clean-minor",
+    "exit_code": 0,
+    "duration_s": 13.04,
+    "classification": "web-pending",
+    "release_link": "https:///Users/15854/AppData/Local/Temp/release-it-skill-evals/clean-minor-remote/releases/new?tag=v1.1.0&title=Release+1.1.0&body=%23%23+Release+1.1.0%0D%0A%0D%0APackage%3A+%60release-it-skill-fixture%60%0D%0A%0D%0AChanges+since+%60v1.0.0%60.%0D%0A%0D%0A%23%23%23+Features%0D%0A%0D%0A*+record+the+published+package+link+%28c2927b0%29%0D%0A*+add+release+plan+builder+%280809f23%29%0D%0A%0D%0A%23%23%23+Bug+Fixes%0D%0A%0D%0A*+keep+the+tag+prefix+when+the+latest+tag+has+one+%28b25b45a%29%0D%0A%0D%0A%23%23%23+Documentation%0D%0A%0D%0A*+describe+the+release+interfaces+%28d1240f4%29&prerelease=false",
+    "warnings": [
+      "Environment variable \"GITHUB_TOKEN\" is required for automated GitHub Releases.",
+      "Falling back to web-based GitHub Release."
+    ],
+    "errors": [],
+    "token_warning": true,
+    "web_fallback": true,
+    "stdout_tail": "🚀 Let's release release-it-skill-fixture (1.0.0...1.1.0)\nChangelog:\n## Release 1.1.0\nPackage: `release-it-skill-fixture`\nChanges since `v1.0.0`.\n### Features\n* record the published package link (c2927b0)\n* add release plan builder (0809f23)\n### Bug Fixes\n* keep the tag prefix when the latest tag has one (b25b45a)\n### Documentation\n* describe the release interfaces (d1240f4)\nChangeset:\n M package.json\n🔗 https:///Users/15854/AppData/Local/Temp/release-it-skill-evals/clean-minor-remote/releases/new?tag=v1.1.0&title=Release+1.1.0&body=%23%23+Release+1.1.0%0D%0A%0D%0APackage%3A+%60release-it-skill-fixture%60%0D%0A%0D%0AChanges+since+%60v1.0.0%60.%0D%0A%0D%0A%23%23%23+Features%0D%0A%0D%0A*+record+the+published+package+link+%28c2927b0%29%0D%0A*+add+release+plan+builder+%280809f23%29%0D%0A%0D%0A%23%23%23+Bug+Fixes%0D%0A%0D%0A*+keep+the+tag+prefix+when+the+latest+tag+has+one+%28b25b45a%29%0D%0A%0D%0A%23%23%23+Documentation%0D%0A%0D%0A*+describe+the+release+interfaces+%28d1240f4%29&prerelease=false\n🏁 Done (in 12s.)\n",
+    "stderr_tail": "WARNING Environment variable \"GITHUB_TOKEN\" is required for automated GitHub Releases.\nWARNING Falling back to web-based GitHub Release.\n- npm version\n✔ npm version\n- Git commit\n✔ Git commit\n- Git tag\n✔ Git tag\n- Git push\n✔ Git push\n- Generating link to GitHub Release web interface\n✔ Generating link to GitHub Release web interface\n",
+    "written": {
+      "config": "C:\\Users\\15854\\AppData\\Local\\Temp\\release-it-skill-evals\\clean-minor\\.git\\release-it-skill\\release-it.json",
+      "notes": "C:\\Users\\15854\\AppData\\Local\\Temp\\release-it-skill-evals\\clean-minor\\.git\\release-it-skill\\release-notes.md",
+      "printer": "C:\\Users\\15854\\AppData\\Local\\Temp\\release-it-skill-evals\\clean-minor\\.git\\release-it-skill\\print-notes.mjs"
+    }
+  },
+  "links": {
+    "repository": "https://github.com/ez-xu/release-it-skill-fixture",
+    "tag": "https://github.com/ez-xu/release-it-skill-fixture/releases/tag/v1.1.0",
+    "release": "https://github.com/ez-xu/release-it-skill-fixture/releases/tag/v1.1.0",
+    "package": "https://www.npmjs.com/package/release-it-skill-fixture/v/1.1.0",
+    "registry": "https://registry.npmjs.org/release-it-skill-fixture",
+    "compare": "https://github.com/ez-xu/release-it-skill-fixture/compare/v1.0.0...v1.1.0",
+    "api": "https://api.github.com/repos/ez-xu/release-it-skill-fixture/releases/tags/v1.1.0",
+    "package_published": false
+  },
+  "checks": [
+    {
+      "id": "tag-local",
+      "ok": true,
+      "detail": "git rev-parse --verify refs/tags/v1.1.0",
+      "value": "96326babdeef897278b79ccb322b906828617c01",
+      "required": true,
+      "skipped": false
+    },
+    {
+      "id": "tag-dereference",
+      "ok": true,
+      "detail": "git rev-list -n 1 v1.1.0 (annotated tags are two objects)",
+      "value": "2cf24a1a3ef9d871e98d0f81faec0442f901fdc8",
+      "required": true,
+      "skipped": false
+    },
+    {
+      "id": "tag-remote",
+      "ok": true,
+      "detail": "origin has v1.1.0 at 2cf24a1a3ef9d871e98d0f81faec0442f901fdc8",
+      "value": "2cf24a1a3ef9d871e98d0f81faec0442f901fdc8",
+      "required": true,
+      "skipped": false
+    },
+    {
+      "id": "head-commit",
+      "ok": true,
+      "detail": "HEAD 2cf24a1a3ef9d871e98d0f81faec0442f901fdc8 must be the commit the tag dereferences to (2cf24a1a3ef9d871e98d0f81faec0442f901fdc8)",
+      "value": "2cf24a1a3ef9d871e98d0f81faec0442f901fdc8",
+      "required": true,
+      "skipped": false
+    },
+    {
+      "id": "manifest-version",
+      "ok": true,
+      "detail": "HEAD:package.json has version '1.1.0', expected '1.1.0'",
+      "value": "1.1.0",
+      "required": true,
+      "skipped": false
+    },
+    {
+      "id": "commit-subject",
+      "ok": true,
+      "detail": "HEAD subject 'chore(release): 1.1.0', expected 'chore(release): 1.1.0'",
+      "value": "chore(release): 1.1.0",
+      "required": true,
+      "skipped": false
+    },
+    {
+      "id": "notes-non-empty",
+      "ok": true,
+      "detail": "release-notes.md is 317 characters",
+      "value": 317,
+      "required": true,
+      "skipped": false
+    },
+    {
+      "id": "links-complete",
+      "ok": true,
+      "detail": "recorded repository, tag, release, compare, package",
+      "value": [
+        "api",
+        "compare",
+        "package",
+        "package_published",
+        "registry",
+        "release",
+        "repository",
+        "tag"
+      ],
+      "required": true,
+      "skipped": false
+    },
+    {
+      "id": "release-api",
+      "ok": false,
+      "detail": "github is not authenticated; release-it fell back to the web release form",
+      "value": null,
+      "required": false,
+      "skipped": true
+    },
+    {
+      "id": "package-registry",
+      "ok": true,
+      "detail": "publishing is switched off",
+      "value": null,
+      "required": false,
+      "skipped": true
+    }
+  ],
+  "failed_checks": [],
+  "error": "",
+  "before": {
+    "head": "c2927b0d3797bee5b46e0208aead41cc32d61780",
+    "tags": [
+      "v1.0.0"
+    ],
+    "remote_refs": [
+      "refs/tags/v1.0.0",
+      "refs/tags/v1.0.0^{}"
+    ],
+    "manifest_blob": "be3a13c1737935f5fa01013a8da871774d903e1f",
+    "version": "1.0.0"
+  },
+  "after": {
+    "head": "2cf24a1a3ef9d871e98d0f81faec0442f901fdc8",
+    "tags": [
+      "v1.0.0",
+      "v1.1.0"
+    ],
+    "remote_refs": [
+      "refs/tags/v1.0.0",
+      "refs/tags/v1.0.0^{}",
+      "refs/tags/v1.1.0",
+      "refs/tags/v1.1.0^{}"
+    ],
+    "manifest_blob": "bad12e97fd6f0f4aa2c44f162d2e5c3e681b62f0",
+    "version": "1.1.0"
+  },
+  "added_tags": [
+    "v1.1.0"
+  ],
+  "untouched": false,
+  "tag_commit": "2cf24a1a3ef9d871e98d0f81faec0442f901fdc8",
+  "remote_tag_commit": "2cf24a1a3ef9d871e98d0f81faec0442f901fdc8",
+  "stdout_tail": "github ez-xu/release-it-skill-fixture (main)\nversion  1.1.0  from increment:minor\ntag      v1.1.0\nprevious v1.0.0\nrunner   release-it --ci --config C:\\Users\\15854\\AppData\\Local\\Temp\\release-it-skill-evals\\clean-minor\\.git\\release-it-skill\\release-it.json --no-npm.publish 1.1.0\nwrites   C:\\Users\\15854\\AppData\\Local\\Temp\\release-it-skill-evals\\clean-minor\\.git\\release-it-skill\nrelease  https://github.com/ez-xu/release-it-skill-fixture/releases/tag/v1.1.0\npackage  https://www.npmjs.com/package/release-it-skill-fixture/v/1.1.0\nwarning: node 24.14.0 does not satisfy release-it 21.1.1 engines ^22.22.2 || ^24.15.0 || >=26.0.0; expect an engines warning and possibly a hard failure\nresult   web-pending (exit 0, 13.04s)\nverdict  Tag and commit verified; the platform release is still pending\n  tag-local          ok   git rev-parse --verify refs/tags/v1.1.0\n  tag-dereference    ok   git rev-list -n 1 v1.1.0 (annotated tags are two objects)\n  tag-remote         ok   origin has v1.1.0 at 2cf24a1a3ef9d871e98d0f81faec0442f901fdc8\n  head-commit        ok   HEAD 2cf24a1a3ef9d871e98d0f81faec0442f901fdc8 must be the commit the tag dereferences to (2cf24a1a3ef9d871e98d0f81faec0442f901fdc8)\n  manifest-version   ok   HEAD:package.json has version '1.1.0', expected '1.1.0'\n  commit-subject     ok   HEAD subject 'chore(release): 1.1.0', expected 'chore(release): 1.1.0'\n  notes-non-empty    ok   release-notes.md is 317 characters\n  links-complete     ok   recorded repository, tag, release, compare, package\n  release-api        skip github is not authenticated; release-it fell back to the web release form\n  package-registry   skip publishing is switched off\nreport   C:\\Users\\15854\\AppData\\Local\\Temp\\release-it-skill-evals\\release-report.md\nreport   C:\\Users\\15854\\AppData\\Local\\Temp\\release-it-skill-evals\\release-report.json\n"
+}

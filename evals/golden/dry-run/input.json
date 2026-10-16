@@ -1,0 +1,10 @@
+{
+  "id": "dry-run",
+  "scenario": "clean",
+  "mode": "release",
+  "increment": "minor",
+  "publish": false,
+  "dry_run": true,
+  "expect": "dry-run",
+  "why": "The safe preview must exit 0 and leave the HEAD, the tags, the remote refs and the manifest byte-for-byte unchanged."
+}

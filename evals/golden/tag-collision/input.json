@@ -1,0 +1,9 @@
+{
+  "id": "tag-collision",
+  "scenario": "tagged",
+  "mode": "release",
+  "increment": "minor",
+  "publish": false,
+  "expect": "refused",
+  "why": "v1.1.0 already exists on the remote and a minor bump would target exactly that name. Re-pointing a published tag is not recoverable, so the run must refuse."
+}

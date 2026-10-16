@@ -1,0 +1,8 @@
+{
+  "name": "release-it-skill",
+  "version": "1.0.0",
+  "description": "Release a repository with release-it 21.1.1 so the tag, the release notes, the published package and the recorded links all describe the same commit — or refuse and publish nothing.",
+  "author": {
+    "name": "agent-skills-platform"
+  }
+}

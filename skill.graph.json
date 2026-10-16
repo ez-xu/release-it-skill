@@ -1,0 +1,454 @@
+{
+  "artifacts": [
+    {
+      "id": "claude_plugin_marketplace_json",
+      "path": ".claude-plugin/marketplace.json",
+      "sha256": "cd5463fdd273bc2b05722e9af538256b0a1bdc851c37b512125b8687db624e28",
+      "type": "package_file"
+    },
+    {
+      "id": "claude_plugin_plugin_json",
+      "path": ".claude-plugin/plugin.json",
+      "sha256": "c3ed07957c1cca376ec55a5d851ad48a70b4fb9ae6f588b5fe17359d6541a191",
+      "type": "package_file"
+    },
+    {
+      "id": "agents_document",
+      "path": "AGENTS.md",
+      "sha256": "a5955370df76a22aeabaa509c2a4669c3c27a866e4e3170d9e4027670ee85ee2",
+      "type": "companion_instruction"
+    },
+    {
+      "id": "contracts_data_contract_release_api_contract_id",
+      "path": "contracts/data_contract_release_api/.contract_id",
+      "sha256": "f764245e8760a095538d3b532ad7566300f8a1e4060a720448c8976e9795f1a9",
+      "type": "package_file"
+    },
+    {
+      "id": "contracts_data_contract_release_api_code_contract_health_py",
+      "path": "contracts/data_contract_release_api/code/contract_health.py",
+      "sha256": "e6a6eb503b68ee9869ff4d436020ffec894ea819dbb3b0f031a8e537eef4d037",
+      "type": "package_file"
+    },
+    {
+      "id": "discovery_json",
+      "path": "discovery.json",
+      "sha256": "9eb5d78edca0f5cdb86fba0ed7f9cad4baa0a30330be305dacaad0f451011525",
+      "type": "package_file"
+    },
+    {
+      "id": "clean_minor_expected",
+      "path": "evals/golden/clean-minor/expected.json",
+      "sha256": "b8e49359fdb590483195b3871a8db61987c3272385f07e14b69657eca8414fdf",
+      "type": "expected_output"
+    },
+    {
+      "id": "clean_minor_input",
+      "path": "evals/golden/clean-minor/input.json",
+      "sha256": "762d4ebc9b69f06e9de819fb69f916a7be976324f0237386a50a0b63a5b061d4",
+      "type": "golden_input"
+    },
+    {
+      "id": "dirty_refusal_expected",
+      "path": "evals/golden/dirty-refusal/expected.json",
+      "sha256": "5b6caf4abf0fe67ed779ad9e4be8a123a1d88a09cb2fd557618b6bcd517b50d7",
+      "type": "expected_output"
+    },
+    {
+      "id": "dirty_refusal_input",
+      "path": "evals/golden/dirty-refusal/input.json",
+      "sha256": "e57f46751cbe0ab507a73455f5c2cae4d4cfdf2c45c189c2d642ab5b484d172d",
+      "type": "golden_input"
+    },
+    {
+      "id": "dry_run_expected",
+      "path": "evals/golden/dry-run/expected.json",
+      "sha256": "9d2d21a98320fbec37b3fca3667f173745fd6e060d17c1ae919c72f9e808e3b5",
+      "type": "expected_output"
+    },
+    {
+      "id": "dry_run_input",
+      "path": "evals/golden/dry-run/input.json",
+      "sha256": "e900735e06b8b6561a459e4e2b64d6f80d756d0a553e9db5a367cc5d374681df",
+      "type": "golden_input"
+    },
+    {
+      "id": "explicit_version_input",
+      "path": "evals/golden/explicit-version/input.json",
+      "sha256": "7f1923c7d53e12899cfe1854dfe28833206f6e51ff4ccfd4331f9ce9d9f2d741",
+      "type": "golden_input"
+    },
+    {
+      "id": "no_package_expected",
+      "path": "evals/golden/no-package/expected.json",
+      "sha256": "2fe56910248c7265fdda9f701ee2c8fd8ff0ef7bf631825e3fedcfec22306f35",
+      "type": "expected_output"
+    },
+    {
+      "id": "no_package_input",
+      "path": "evals/golden/no-package/input.json",
+      "sha256": "eb0f5b5b01abc2b20e1ff61e798ad83b5322ea1024eb6595d86f9c7e9f92a690",
+      "type": "golden_input"
+    },
+    {
+      "id": "tag_collision_expected",
+      "path": "evals/golden/tag-collision/expected.json",
+      "sha256": "0fea0062f72ebcda816abcf11abf9152ed21539923b8ab96aad2dd552405f765",
+      "type": "expected_output"
+    },
+    {
+      "id": "tag_collision_input",
+      "path": "evals/golden/tag-collision/input.json",
+      "sha256": "7f883cc8216dde9a19e7f12d08fb8ed4efef693b937f8fe30d5996c9ab68ba16",
+      "type": "golden_input"
+    },
+    {
+      "id": "evals_release_it_skill_eval_md",
+      "path": "evals/release-it-skill.eval.md",
+      "sha256": "12512b123b9b91adbdf6b237e2f4d90eeac39f3376b431571a500980b35679a6",
+      "type": "eval_spec"
+    },
+    {
+      "id": "install_ps1",
+      "path": "install.ps1",
+      "sha256": "8aa56c7acab15c2795779b05086626162d401cab5b76495e3fe47037690bf58f",
+      "type": "package_file"
+    },
+    {
+      "id": "install_sh",
+      "path": "install.sh",
+      "sha256": "1a6e4cbf1f7cc5a26cac3e3180384c94efe22651756e88759b4e6f3c4b275bac",
+      "type": "package_file"
+    },
+    {
+      "id": "interview_json",
+      "path": "interview.json",
+      "sha256": "c496b91b1c9ca3d788e76370283f964d42d539d8dc777662bab743fec782f2ae",
+      "type": "package_file"
+    },
+    {
+      "id": "readme_md",
+      "path": "README.md",
+      "sha256": "c0d99ebf66410f38bb1e32be2eda9609864a4676f418fe0bb13b839f57f1a7af",
+      "type": "package_file"
+    },
+    {
+      "id": "references_recon_facts_md",
+      "path": "references/_recon-facts.md",
+      "sha256": "155fe60cd0aa5accb1984986a5f12fda79f862e2a4dc1be01d35e681d732dc0f",
+      "type": "reference"
+    },
+    {
+      "id": "references_interfaces_api_md",
+      "path": "references/interfaces-api.md",
+      "sha256": "5d122551def6ced0ba8771475ca364d56e36580e8f098799b7d678d17e8cff86",
+      "type": "reference"
+    },
+    {
+      "id": "references_interfaces_cli_md",
+      "path": "references/interfaces-cli.md",
+      "sha256": "9858ebdc00e41f8fe1daf2cfa8970cfc84dbafc6ae503e015f2ed911cf10e9c6",
+      "type": "reference"
+    },
+    {
+      "id": "references_interfaces_config_md",
+      "path": "references/interfaces-config.md",
+      "sha256": "408d664b08077a06c47374b654347018e0a7abcaa35b60c9683bac50119c8224",
+      "type": "reference"
+    },
+    {
+      "id": "references_interfaces_hooks_md",
+      "path": "references/interfaces-hooks.md",
+      "sha256": "79f42ecd51c7b09322a31ced361537d1ece5e8883a11caea8e2be9071d20e6ec",
+      "type": "reference"
+    },
+    {
+      "id": "references_interfaces_matrix_md",
+      "path": "references/interfaces-matrix.md",
+      "sha256": "0d6b495546cdfe564869ac13683ca0a8ab0ede5ec31d53493c534e8350b6810c",
+      "type": "reference"
+    },
+    {
+      "id": "references_interfaces_plugins_md",
+      "path": "references/interfaces-plugins.md",
+      "sha256": "209b7de5dd7c595c6766eb77adc366052e59b8f60c8cebea75742b131a30bb4d",
+      "type": "reference"
+    },
+    {
+      "id": "scripts_dependency_health_py",
+      "path": "scripts/dependency_health.py",
+      "sha256": "3de37f80d22b798b34fe9b6d59d3ee3c81b31f431c4453f836b9f3f6172db72c",
+      "type": "script"
+    },
+    {
+      "id": "scripts_eval_check_py",
+      "path": "scripts/eval_check.py",
+      "sha256": "60e88de45eceadcce3a533ef8414d0fd6d7e851b4cc2ea29288e43f384098370",
+      "type": "script"
+    },
+    {
+      "id": "scripts_eval_harness_py",
+      "path": "scripts/eval_harness.py",
+      "sha256": "cc9bbf949db6d1c49e07e64d524adcf3b4f0463d17ab49602aafc51444b4a480",
+      "type": "script"
+    },
+    {
+      "id": "scripts_evolve_py",
+      "path": "scripts/evolve.py",
+      "sha256": "76dd0787a84f23adb42516dafca5cf2733c9c88c8039c655c9f3f332d64c5840",
+      "type": "script"
+    },
+    {
+      "id": "scripts_review_staleness_py",
+      "path": "scripts/review_staleness.py",
+      "sha256": "28abf639d28e41add71b3aae1a28eeab1cce7577dd7341a0829459c96edc8d72",
+      "type": "script"
+    },
+    {
+      "id": "scripts_rls_contract_py",
+      "path": "scripts/rls_contract.py",
+      "sha256": "f5cd72a3ecd1f521c2d09f26144eba8fda47bac56f2c3426beeb96fa35479f67",
+      "type": "script"
+    },
+    {
+      "id": "scripts_rls_fixture_py",
+      "path": "scripts/rls_fixture.py",
+      "sha256": "0676a7a530d775796c87e66434af084abf425fd7e5f7cd9e5f1ff8d82821c984",
+      "type": "script"
+    },
+    {
+      "id": "scripts_rls_plan_py",
+      "path": "scripts/rls_plan.py",
+      "sha256": "4908bc865d15a8a6324e71ad3fdb9b6b02cb1e54b948cf9a18fed157f7af21eb",
+      "type": "script"
+    },
+    {
+      "id": "scripts_rls_release_py",
+      "path": "scripts/rls_release.py",
+      "sha256": "b2ed4156f49ebf242859176fc85b9053d8b4350863d5cd9c9e1659c13cf27e6d",
+      "type": "script"
+    },
+    {
+      "id": "scripts_rls_repo_py",
+      "path": "scripts/rls_repo.py",
+      "sha256": "91347893c0c0f01d5260ae5c970124d6fb722a5324c4e9bd771d20c1faf658fe",
+      "type": "script"
+    },
+    {
+      "id": "scripts_rls_report_py",
+      "path": "scripts/rls_report.py",
+      "sha256": "f9a9b8535d0719b0fe2d3bb06a4c60d10d7d370822cd020a3a5dcba8df556cb2",
+      "type": "script"
+    },
+    {
+      "id": "scripts_rls_shell_py",
+      "path": "scripts/rls_shell.py",
+      "sha256": "8c63e7c23555ee358768725f6d17ba1767362f17955222051f8a12951e7ba7c0",
+      "type": "script"
+    },
+    {
+      "id": "scripts_rls_verify_py",
+      "path": "scripts/rls_verify.py",
+      "sha256": "55ebe170e7a8bcd6f9d6171b30f647ea7033229611b95d08a7000303651af692",
+      "type": "script"
+    },
+    {
+      "id": "scripts_rls_version_py",
+      "path": "scripts/rls_version.py",
+      "sha256": "78bb5066aa276670a7896bf5254b352fcabdb70a3c3617f2555651f70ec3e0e7",
+      "type": "script"
+    },
+    {
+      "id": "scripts_run_evals_py",
+      "path": "scripts/run_evals.py",
+      "sha256": "345a3c3bf4fb9a2284b9da16bf6176338d22f70a4f2307959df85bdbfb41b788",
+      "type": "script"
+    },
+    {
+      "id": "pipeline",
+      "path": "scripts/run_pipeline.py",
+      "sha256": "953915f5bf5308b1892d4cea92e8de949b66f44523118892d69d0f4ed142a181",
+      "type": "script"
+    },
+    {
+      "id": "scripts_schema_drift_py",
+      "path": "scripts/schema_drift.py",
+      "sha256": "96629c017fb8c75e4117506819504bfbe9b8bf8c9daba68b20f3b6cef37d9edd",
+      "type": "script"
+    },
+    {
+      "id": "scripts_skill_document_py",
+      "path": "scripts/skill_document.py",
+      "sha256": "06005e9df7c77a4bb284991495bc4315f0cd11d020da01f8428e09d0e95d2003",
+      "type": "script"
+    },
+    {
+      "id": "scripts_staleness_check_py",
+      "path": "scripts/staleness_check.py",
+      "sha256": "432c7393a43acb65a181151d3cc8db38a2dea53a3908cf04bb91575d412b12a6",
+      "type": "script"
+    },
+    {
+      "id": "scripts_success_ledger_py",
+      "path": "scripts/success_ledger.py",
+      "sha256": "47f2f630e4b53ed9aec480dea0667d21c77f7e871b585a2e88fb856fdb317081",
+      "type": "script"
+    },
+    {
+      "id": "scripts_wiki_maintenance_py",
+      "path": "scripts/wiki_maintenance.py",
+      "sha256": "72c88bcfd733d20eb69d8053c48928b69396ce49484cbb678a160c59dc7e68cf",
+      "type": "script"
+    },
+    {
+      "id": "skill_document",
+      "path": "SKILL.md",
+      "sha256": "099e68f61e858018fb0a81f8bfa56c35e1049816c65966eff553a3a4efcd2fb3",
+      "type": "instruction"
+    },
+    {
+      "id": "wiki_index_md",
+      "path": "wiki/index.md",
+      "sha256": "1ec67aa333fdc8c3a20abe80caed9c5edb3e1f0982d672c3eaca12d6e1c846e2",
+      "type": "package_file"
+    },
+    {
+      "id": "wiki_logs_md",
+      "path": "wiki/logs.md",
+      "sha256": "192797326b725dc64ceac7583a3209fe29004a3cbd49c424bc951b3737548cda",
+      "type": "package_file"
+    },
+    {
+      "id": "wiki_readme_md",
+      "path": "wiki/README.md",
+      "sha256": "490d49a9152a61ffc5f284655da3ea2964a25e53618e1ea455c8788e358fbb1f",
+      "type": "package_file"
+    },
+    {
+      "id": "wiki_skill_impact_md",
+      "path": "wiki/skill-impact.md",
+      "sha256": "18de5fb415468472e0bf0123d36ffa3c3fbe16e2b82291e55dce355e8c37be79",
+      "type": "package_file"
+    }
+  ],
+  "constraints": [
+    {
+      "id": "every_expected_is_reachable",
+      "severity": "error"
+    },
+    {
+      "id": "deterministic_multistep_has_orchestrator",
+      "severity": "error"
+    },
+    {
+      "id": "semantic_recon_contracts_ready",
+      "severity": "error"
+    }
+  ],
+  "edges": [
+    {
+      "from": "clean_minor_input",
+      "relation": "consumed_by",
+      "to": "pipeline"
+    },
+    {
+      "from": "dirty_refusal_input",
+      "relation": "consumed_by",
+      "to": "pipeline"
+    },
+    {
+      "from": "dry_run_input",
+      "relation": "consumed_by",
+      "to": "pipeline"
+    },
+    {
+      "from": "explicit_version_input",
+      "relation": "consumed_by",
+      "to": "pipeline"
+    },
+    {
+      "from": "no_package_input",
+      "relation": "consumed_by",
+      "to": "pipeline"
+    },
+    {
+      "from": "pipeline",
+      "relation": "compared_against",
+      "to": "clean_minor_expected"
+    },
+    {
+      "from": "pipeline",
+      "relation": "compared_against",
+      "to": "dirty_refusal_expected"
+    },
+    {
+      "from": "pipeline",
+      "relation": "compared_against",
+      "to": "dry_run_expected"
+    },
+    {
+      "from": "pipeline",
+      "relation": "compared_against",
+      "to": "no_package_expected"
+    },
+    {
+      "from": "pipeline",
+      "relation": "compared_against",
+      "to": "tag_collision_expected"
+    },
+    {
+      "from": "tag_collision_input",
+      "relation": "consumed_by",
+      "to": "pipeline"
+    }
+  ],
+  "gates": [
+    {
+      "id": "spec",
+      "inputs": [
+        "skill_document",
+        "package_index"
+      ]
+    },
+    {
+      "id": "security",
+      "inputs": [
+        "package"
+      ]
+    },
+    {
+      "id": "pipeline",
+      "inputs": [
+        "scripts",
+        "dependency_manifests"
+      ]
+    },
+    {
+      "id": "eval_schema",
+      "inputs": [
+        "eval_specs",
+        "golden_cases",
+        "eval_runner"
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "semantic_recon": {
+    "reasons": [],
+    "sources": [
+      {
+        "contract_id": "release_api",
+        "contract_path": "C:\\Users\\15854\\.agents\\skills\\_sources\\release-it-skill\\contracts\\data_contract_release_api",
+        "id": "release-api",
+        "impact": "high",
+        "reuse": "recurring",
+        "type": "api"
+      }
+    ],
+    "status": "REQUIRED"
+  },
+  "skill": "release-it-skill",
+  "workflow": {
+    "kind": "deterministic"
+  }
+}

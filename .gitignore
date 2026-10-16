@@ -1,0 +1,16 @@
+# Runtime state — never committed.
+.skill-cache/
+
+# Python bytecode.
+__pycache__/
+*.py[cod]
+
+# Throwaway sandboxes built by scripts/rls_fixture.py.
+.sandbox/
+sandbox/
+
+# Local environment files. Tokens are read from GITHUB_TOKEN / GITLAB_TOKEN at
+# run time and are never written into this repository.
+.env
+.env.*
+!.env.example

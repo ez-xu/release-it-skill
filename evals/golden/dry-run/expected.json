@@ -1,0 +1,190 @@
+{
+  "scenario": "dry-run",
+  "expect": "dry-run",
+  "mode": "release",
+  "exit_code": 0,
+  "satisfied": true,
+  "reason": "dry run wrote nothing",
+  "verdict": "dry-run",
+  "consistent": false,
+  "refused": [],
+  "blockers": [],
+  "tag": "v1.1.0",
+  "version": "1.1.0",
+  "notes_chars": 317,
+  "notes_sections": [
+    "Features",
+    "Bug Fixes",
+    "Documentation"
+  ],
+  "release_record": {
+    "argv": [
+      "release-it",
+      "--ci",
+      "--config",
+      "C:\\Users\\15854\\AppData\\Local\\Temp\\release-it-skill-evals\\dry-run\\.git\\release-it-skill\\release-it.json",
+      "--dry-run",
+      "--no-npm.publish",
+      "1.1.0"
+    ],
+    "display": "release-it --ci --config C:\\Users\\15854\\AppData\\Local\\Temp\\release-it-skill-evals\\dry-run\\.git\\release-it-skill\\release-it.json --dry-run --no-npm.publish 1.1.0",
+    "cwd": "C:\\Users\\15854\\AppData\\Local\\Temp\\release-it-skill-evals\\dry-run",
+    "exit_code": 0,
+    "duration_s": 2.01,
+    "classification": "dry-run",
+    "release_link": "https:///Users/15854/AppData/Local/Temp/release-it-skill-evals/dry-run-remote/releases/new?tag=v1.1.0&title=Release+1.1.0&body=node+%22C%3A%2FUsers%2F15854%2FAppData%2FLocal%2FTemp%2Frelease-it-skill-evals%2Fdry-run%2F.git%2Frelease-it-skill%2Fprint-notes.mjs%22&prerelease=false",
+    "warnings": [
+      "Environment variable \"GITHUB_TOKEN\" is required for automated GitHub Releases.",
+      "Falling back to web-based GitHub Release."
+    ],
+    "errors": [],
+    "token_warning": true,
+    "web_fallback": true,
+    "stdout_tail": "🚀 Let's release release-it-skill-fixture (1.0.0...1.1.0)\nChangelog:\n## Release 1.1.0\nPackage: `release-it-skill-fixture`\nChanges since `v1.0.0`.\n### Features\n* record the published package link (0b91887)\n* add release plan builder (48ef63e)\n### Bug Fixes\n* keep the tag prefix when the latest tag has one (11b49ba)\n### Documentation\n* describe the release interfaces (b1d0448)\nEmpty changeset\nEmpty release notes\n🔗 https:///Users/15854/AppData/Local/Temp/release-it-skill-evals/dry-run-remote/releases/new?tag=v1.1.0&title=Release+1.1.0&body=node+%22C%3A%2FUsers%2F15854%2FAppData%2FLocal%2FTemp%2Frelease-it-skill-evals%2Fdry-run%2F.git%2Frelease-it-skill%2Fprint-notes.mjs%22&prerelease=false\n🏁 Done (in 1s.)\n",
+    "stderr_tail": "$ git diff --quiet HEAD\n$ git rev-parse --abbrev-ref HEAD\n$ git config --get branch.main.remote\n$ git remote get-url origin\n! git fetch\n$ git rev-parse --abbrev-ref HEAD  [cached]\n$ git describe --tags --match=v* --abbrev=0\n$ git symbolic-ref HEAD\n$ git for-each-ref --format=\"%(upstream:short)\" refs/heads/main\n$ git rev-parse --abbrev-ref HEAD  [cached]\n$ git config --get branch.main.remote  [cached]\n$ git remote get-url origin  [cached]\n! git fetch\n$ git rev-parse --abbrev-ref HEAD  [cached]\n$ git describe --tags --match=v* --abbrev=0  [cached]\nWARNING Environment variable \"GITHUB_TOKEN\" is required for automated GitHub Releases.\nWARNING Falling back to web-based GitHub Release.\n$ node \"C:/Users/15854/AppData/Local/Temp/release-it-skill-evals/dry-run/.git/release-it-skill/print-notes.mjs\"\n! npm version 1.1.0 --no-git-tag-version --workspaces=false\n$ git status --short --untracked-files=no\n! git add . --update\n! node \"C:/Users/15854/AppData/Local/Temp/release-it-skill-evals/dry-run/.git/release-it-skill/print-notes.mjs\"\n! git commit --message chore(release): 1.1.0\n! git tag --annotate --message Release 1.1.0 v1.1.0\n$ git symbolic-ref HEAD  [cached]\n$ git for-each-ref --format=\"%(upstream:short)\" refs/heads/main  [cached]\n! git push --follow-tags\n",
+    "written": {
+      "config": "C:\\Users\\15854\\AppData\\Local\\Temp\\release-it-skill-evals\\dry-run\\.git\\release-it-skill\\release-it.json",
+      "notes": "C:\\Users\\15854\\AppData\\Local\\Temp\\release-it-skill-evals\\dry-run\\.git\\release-it-skill\\release-notes.md",
+      "printer": "C:\\Users\\15854\\AppData\\Local\\Temp\\release-it-skill-evals\\dry-run\\.git\\release-it-skill\\print-notes.mjs"
+    }
+  },
+  "links": {
+    "repository": "https://github.com/ez-xu/release-it-skill-fixture",
+    "tag": "https://github.com/ez-xu/release-it-skill-fixture/releases/tag/v1.1.0",
+    "release": "https://github.com/ez-xu/release-it-skill-fixture/releases/tag/v1.1.0",
+    "package": "https://www.npmjs.com/package/release-it-skill-fixture/v/1.1.0",
+    "registry": "https://registry.npmjs.org/release-it-skill-fixture",
+    "compare": "https://github.com/ez-xu/release-it-skill-fixture/compare/v1.0.0...v1.1.0",
+    "api": "https://api.github.com/repos/ez-xu/release-it-skill-fixture/releases/tags/v1.1.0",
+    "package_published": false
+  },
+  "checks": [
+    {
+      "id": "tag-local",
+      "ok": false,
+      "detail": "git rev-parse --verify refs/tags/v1.1.0",
+      "value": null,
+      "required": true,
+      "skipped": false
+    },
+    {
+      "id": "tag-dereference",
+      "ok": false,
+      "detail": "git rev-list -n 1 v1.1.0 (annotated tags are two objects)",
+      "value": null,
+      "required": true,
+      "skipped": false
+    },
+    {
+      "id": "tag-remote",
+      "ok": false,
+      "detail": "v1.1.0 is not on origin",
+      "value": null,
+      "required": true,
+      "skipped": false
+    },
+    {
+      "id": "head-commit",
+      "ok": false,
+      "detail": "HEAD 0b918870f92bbfc981d9ef18c5f9aeae5eb0ac77 must be the commit the tag dereferences to (?)",
+      "value": "0b918870f92bbfc981d9ef18c5f9aeae5eb0ac77",
+      "required": true,
+      "skipped": false
+    },
+    {
+      "id": "manifest-version",
+      "ok": false,
+      "detail": "HEAD:package.json has version '1.0.0', expected '1.1.0'",
+      "value": "1.0.0",
+      "required": true,
+      "skipped": false
+    },
+    {
+      "id": "commit-subject",
+      "ok": false,
+      "detail": "HEAD subject 'feat: record the published package link', expected 'chore(release): 1.1.0'",
+      "value": "feat: record the published package link",
+      "required": true,
+      "skipped": false
+    },
+    {
+      "id": "notes-non-empty",
+      "ok": true,
+      "detail": "release-notes.md is 317 characters",
+      "value": 317,
+      "required": true,
+      "skipped": false
+    },
+    {
+      "id": "links-complete",
+      "ok": true,
+      "detail": "recorded repository, tag, release, compare, package",
+      "value": [
+        "api",
+        "compare",
+        "package",
+        "package_published",
+        "registry",
+        "release",
+        "repository",
+        "tag"
+      ],
+      "required": true,
+      "skipped": false
+    },
+    {
+      "id": "release-api",
+      "ok": true,
+      "detail": "no platform release was requested",
+      "value": null,
+      "required": false,
+      "skipped": true
+    },
+    {
+      "id": "package-registry",
+      "ok": true,
+      "detail": "publishing is switched off",
+      "value": null,
+      "required": false,
+      "skipped": true
+    }
+  ],
+  "failed_checks": [
+    "tag-local",
+    "tag-dereference",
+    "tag-remote",
+    "head-commit",
+    "manifest-version",
+    "commit-subject"
+  ],
+  "error": "",
+  "before": {
+    "head": "0b918870f92bbfc981d9ef18c5f9aeae5eb0ac77",
+    "tags": [
+      "v1.0.0"
+    ],
+    "remote_refs": [
+      "refs/tags/v1.0.0",
+      "refs/tags/v1.0.0^{}"
+    ],
+    "manifest_blob": "be3a13c1737935f5fa01013a8da871774d903e1f",
+    "version": "1.0.0"
+  },
+  "after": {
+    "head": "0b918870f92bbfc981d9ef18c5f9aeae5eb0ac77",
+    "tags": [
+      "v1.0.0"
+    ],
+    "remote_refs": [
+      "refs/tags/v1.0.0",
+      "refs/tags/v1.0.0^{}"
+    ],
+    "manifest_blob": "be3a13c1737935f5fa01013a8da871774d903e1f",
+    "version": "1.0.0"
+  },
+  "added_tags": [],
+  "untouched": true,
+  "tag_commit": "",
+  "remote_tag_commit": "",
+  "stdout_tail": "github ez-xu/release-it-skill-fixture (main)\nversion  1.1.0  from increment:minor\ntag      v1.1.0\nprevious v1.0.0\nrunner   release-it --ci --config C:\\Users\\15854\\AppData\\Local\\Temp\\release-it-skill-evals\\dry-run\\.git\\release-it-skill\\release-it.json --dry-run --no-npm.publish 1.1.0\nwrites   C:\\Users\\15854\\AppData\\Local\\Temp\\release-it-skill-evals\\dry-run\\.git\\release-it-skill\nrelease  https://github.com/ez-xu/release-it-skill-fixture/releases/tag/v1.1.0\npackage  https://www.npmjs.com/package/release-it-skill-fixture/v/1.1.0\nwarning: node 24.14.0 does not satisfy release-it 21.1.1 engines ^22.22.2 || ^24.15.0 || >=26.0.0; expect an engines warning and possibly a hard failure\nwarning: dry run: release-it performs every check but writes nothing\nresult   dry-run (exit 0, 2.01s)\nverdict  Dry run: nothing was written\n  tag-local          FAIL git rev-parse --verify refs/tags/v1.1.0\n  tag-dereference    FAIL git rev-list -n 1 v1.1.0 (annotated tags are two objects)\n  tag-remote         FAIL v1.1.0 is not on origin\n  head-commit        FAIL HEAD 0b918870f92bbfc981d9ef18c5f9aeae5eb0ac77 must be the commit the tag dereferences to (?)\n  manifest-version   FAIL HEAD:package.json has version '1.0.0', expected '1.1.0'\n  commit-subject     FAIL HEAD subject 'feat: record the published package link', expected 'chore(release): 1.1.0'\n  notes-non-empty    ok   release-notes.md is 317 characters\n  links-complete     ok   recorded repository, tag, release, compare, package\n  release-api        skip no platform release was requested\n  package-registry   skip publishing is switched off\nreport   C:\\Users\\15854\\AppData\\Local\\Temp\\release-it-skill-evals\\release-report.md\nreport   C:\\Users\\15854\\AppData\\Local\\Temp\\release-it-skill-evals\\release-report.json\n"
+}

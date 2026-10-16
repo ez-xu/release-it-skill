@@ -1,0 +1,69 @@
+{
+  "scenario": "no-package",
+  "expect": "refused",
+  "mode": "release",
+  "exit_code": 2,
+  "satisfied": true,
+  "reason": "refused with exit 2 and changed nothing",
+  "verdict": "",
+  "consistent": false,
+  "refused": [
+    "no version manifest found in the repository",
+    "package manifest cannot be read: no version manifest found in the repository"
+  ],
+  "blockers": [
+    "no version manifest found in the repository",
+    "package manifest cannot be read: no version manifest found in the repository"
+  ],
+  "tag": "v1.1.0",
+  "version": "1.1.0",
+  "notes_chars": 280,
+  "notes_sections": [
+    "Features",
+    "Bug Fixes",
+    "Documentation"
+  ],
+  "release_record": {},
+  "links": {
+    "repository": "https://github.com/ez-xu/release-it-skill-fixture",
+    "tag": "https://github.com/ez-xu/release-it-skill-fixture/releases/tag/v1.1.0",
+    "release": "https://github.com/ez-xu/release-it-skill-fixture/releases/tag/v1.1.0",
+    "package": "",
+    "registry": "",
+    "compare": "https://github.com/ez-xu/release-it-skill-fixture/compare/v1.0.0...v1.1.0",
+    "api": "https://api.github.com/repos/ez-xu/release-it-skill-fixture/releases/tags/v1.1.0",
+    "package_published": false
+  },
+  "checks": [],
+  "failed_checks": [],
+  "error": "",
+  "before": {
+    "head": "60197962276db0469bd6563cd553fba8f05d8b6d",
+    "tags": [
+      "v1.0.0"
+    ],
+    "remote_refs": [
+      "refs/tags/v1.0.0",
+      "refs/tags/v1.0.0^{}"
+    ],
+    "manifest_blob": "",
+    "version": null
+  },
+  "after": {
+    "head": "60197962276db0469bd6563cd553fba8f05d8b6d",
+    "tags": [
+      "v1.0.0"
+    ],
+    "remote_refs": [
+      "refs/tags/v1.0.0",
+      "refs/tags/v1.0.0^{}"
+    ],
+    "manifest_blob": "",
+    "version": null
+  },
+  "added_tags": [],
+  "untouched": true,
+  "tag_commit": "",
+  "remote_tag_commit": "",
+  "stdout_tail": "github ez-xu/release-it-skill-fixture (main)\nversion  1.1.0  from increment:minor\ntag      v1.1.0\nprevious v1.0.0\nrunner   release-it --ci --config C:\\Users\\15854\\AppData\\Local\\Temp\\release-it-skill-evals\\no-package\\.git\\release-it-skill\\release-it.json --no-npm.publish 1.1.0\nwrites   C:\\Users\\15854\\AppData\\Local\\Temp\\release-it-skill-evals\\no-package\\.git\\release-it-skill\nrelease  https://github.com/ez-xu/release-it-skill-fixture/releases/tag/v1.1.0\nwarning: no package.json was found, so npm.publish is false and no package link is recorded\nwarning: node 24.14.0 does not satisfy release-it 21.1.1 engines ^22.22.2 || ^24.15.0 || >=26.0.0; expect an engines warning and possibly a hard failure\nBLOCKED: no version manifest found in the repository\nBLOCKED: package manifest cannot be read: no version manifest found in the repository\nREFUSED: no version manifest found in the repository; package manifest cannot be read: no version manifest found in the repository\n"
+}

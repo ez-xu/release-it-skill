@@ -1,0 +1,9 @@
+{
+  "id": "clean-minor",
+  "scenario": "clean",
+  "mode": "release",
+  "increment": "minor",
+  "publish": false,
+  "expect": "released",
+  "why": "The ordinary path: a clean tree four conventional commits past v1.0.0 must produce v1.1.0 with the tag, the commit and the manifest all agreeing."
+}

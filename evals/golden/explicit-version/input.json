@@ -1,0 +1,9 @@
+{
+  "id": "explicit-version",
+  "scenario": "clean",
+  "mode": "release",
+  "version": "2.0.0",
+  "publish": false,
+  "expect": "released",
+  "why": "A named version must be released exactly as asked, not re-derived from the commits: the positional version reaches release-it directly and the plan's version_source is 'explicit'."
+}

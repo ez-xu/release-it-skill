@@ -1,0 +1,245 @@
+{
+  "question": "Can this release be published so that the tag, the release notes, the published package and the recorded links all describe the same commit?",
+  "trigger": [
+    "A maintainer wants to cut a release for a git repository that has a version manifest",
+    "A recurring release needs the version resolved, tagged, released and published in one command",
+    "An existing tag or release must be checked for agreement with the published package",
+    "A release must be rehearsed end to end without publishing anything",
+    "release-it is already configured and its interfaces must be driven correctly",
+    "A half-finished release must be diagnosed before anything else is published"
+  ],
+  "decision": [
+    "Which version the release carries and how that version was derived",
+    "Whether the package, the platform release, or both are published",
+    "Whether the run publishes at all, or refuses with nothing published",
+    "What the recorded tag, release and package links are"
+  ],
+  "evidence": [
+    "the repository's version manifest and its git state (branch, clean tree, upstream)",
+    "the release-it configuration that resolves for this repository",
+    "the tag and the release read back from the platform after publishing",
+    "the package version read back from the registry",
+    "the recorded links for the tag, the release and the package"
+  ],
+  "success_measure": "After one release, the tag, the release notes, the published package and the recorded links all describe the same commit and each is confirmed by reading it back from the platform; otherwise the run refuses and publishes nothing.",
+  "outcome": "A verified release (tag, release with notes, published package, and links), or a named refusal that published nothing.",
+  "intended_users": [
+    "A maintainer publishing a release of their own repository",
+    "An agent asked to cut a release, or to verify one that already ran"
+  ],
+  "input_types": [
+    "a local git repository with a version manifest (package.json or an equivalent)",
+    "a release-it configuration, either existing or scaffolded by the skill",
+    "the intended version, or the increment to apply to the current version"
+  ],
+  "output_artifacts": [
+    "release-plan.json - the resolved version, provider, remote and configuration",
+    "release-report.json - the verified tag, release, package and links",
+    "release-report.md - the human-readable link roll-up"
+  ],
+  "use_cases": [
+    "Cut a release of a repository whose version manifest and git remote are already correct",
+    "Work out what the next version would be without publishing anything",
+    "Publish and then prove that the tag, the release and the package agree",
+    "Read the full interface surface of release-it before writing a configuration"
+  ],
+  "examples": [
+    {
+      "invocation": "/release-it-skill plan --repo .",
+      "description": "Resolve the version, provider and configuration and write release-plan.json without publishing anything."
+    },
+    {
+      "invocation": "/release-it-skill release --repo . --increment minor",
+      "description": "Publish the release: bump the manifest, commit, tag, create the release with notes and publish the package, then verify all four."
+    },
+    {
+      "invocation": "/release-it-skill verify --repo . --tag v1.4.0",
+      "description": "Read the tag, the release and the package back and report whether they describe the same commit."
+    }
+  ],
+  "permissions_systems": [
+    "Create and push git tags to the configured remote",
+    "Create a release with release notes and assets on the hosting platform",
+    "Publish a package to the package registry",
+    "Read tags, releases and package versions back from the platform"
+  ],
+  "typical_completion_time": "1-3 minutes for a repository that is already configured; a first-time configuration adds a few minutes",
+  "compatibility": {
+    "declared": [
+      "claude-code",
+      "codex",
+      "cursor",
+      "copilot",
+      "gemini",
+      "opencode",
+      "cline"
+    ],
+    "certified": []
+  },
+  "environment": {
+    "documentation_sources": [
+      "https://github.com/release-it/release-it",
+      "https://github.com/ez-xu/release-it",
+      "https://www.npmjs.com/package/release-it"
+    ],
+    "data_sources": [
+      "the platform release API as exposed by the gh command line interface",
+      "the platform release API as exposed by the glab command line interface",
+      "the package registry as exposed by the npm command line interface"
+    ],
+    "required_capabilities": [
+      "git 2.40 or newer",
+      "Node 20 or newer with npm, which release-it runs on",
+      "gh authenticated for GitHub targets",
+      "glab authenticated for GitLab targets",
+      "python 3.9 or newer using only the standard library"
+    ],
+    "readiness_checks": [
+      "git rev-parse --is-inside-work-tree",
+      "git remote get-url origin",
+      "gh auth status",
+      "glab auth status",
+      "npm --version"
+    ]
+  },
+  "risk": {
+    "tier": "high",
+    "permissions": [
+      "Create and push git tags to the configured remote",
+      "Create a release with release notes on the hosting platform",
+      "Publish a package to the package registry"
+    ],
+    "mutation_boundary": "approval-required",
+    "mutation_scope": "The repository's version manifest and changelog, the git history and tags, the platform release, and the published package. Tags, releases and published package versions are public and cannot be withdrawn.",
+    "approval_required": [
+      "A human decides to publish, and does so with the repository checked out, the tree clean and the credentials present",
+      "A human accepts that a published version cannot be reused, so a wrong release is corrected by a further release"
+    ]
+  },
+  "software_mutation": {
+    "applies": true,
+    "affected_structures": [
+      "package.json (or the repository's equivalent version manifest)",
+      "CHANGELOG.md",
+      ".release-it.json",
+      "git commits, git tags and the configured remote",
+      "the platform release and its notes",
+      "the published package version"
+    ],
+    "invariants": [
+      "The version in the manifest always equals the tag name with its prefix removed",
+      "The release is created from the commit the tag resolves to, never from the branch head",
+      "A version that has been published is never published again",
+      "The recorded links name the same version as the manifest, the tag and the release"
+    ],
+    "sources_of_truth": [
+      "the released version: the version field of the repository's manifest read after the bump",
+      "the released commit: git rev-list -n 1 <tag>, which dereferences the annotated tag to a commit",
+      "the tag that exists on the remote: git ls-remote --tags origin <tag> including its peeled line",
+      "the published package version: npm view <package>@<version> version",
+      "the created release: the platform release read back by tag name"
+    ],
+    "invalid_states_prevented": [
+      "a tag exists but the package was never published",
+      "the package was published but no tag exists",
+      "the release notes name a different version from the tag",
+      "the tag points at a commit that is not the commit the artifact was built from",
+      "a release was created from the branch head because the named tag did not exist yet"
+    ],
+    "state_transitions": [
+      "clean -> version resolved -> manifest bumped -> committed -> tagged -> release created -> package published -> verified",
+      "failure before the tag lands -> nothing published -> clean",
+      "failure after the tag lands -> tagged but unreleased -> a further release corrects it"
+    ]
+  },
+  "data_interfaces": {
+    "applies": true,
+    "interface_types": [
+      "api"
+    ],
+    "authoritative_sources": [
+      "release API"
+    ],
+    "entities": [
+      "Repository",
+      "Version",
+      "Tag",
+      "Release",
+      "ReleaseNotes",
+      "Package"
+    ],
+    "identifiers": [
+      "the repository owner and name, derived from the git remote",
+      "the tag name, which is the version with the configured prefix",
+      "the version string, which the manifest and the package registry share"
+    ],
+    "relationships": [
+      "One version yields exactly one tag and at most one release",
+      "One release belongs to exactly one tag, and that tag resolves to exactly one commit",
+      "One published package version belongs to exactly one released version"
+    ],
+    "field_semantics": [
+      "a tag name is the manifest version carrying the configured prefix",
+      "release notes describe the changes between the previous tag and this tag",
+      "whether a release is a draft or a prerelease is a platform property, not a version property"
+    ],
+    "invariants": [
+      "A release is only ever reported as verified when its tag, its notes, its package and its links all name the same version",
+      "Reading back is what establishes the release; a successful exit code alone does not"
+    ],
+    "freshness_and_pagination": [
+      "Read-back happens after the publish step, so the record is as fresh as the run",
+      "Listing tags or releases is paged, so a lookup by exact tag name is used rather than a scan of the first page"
+    ],
+    "nullability": [
+      "A repository legitimately has no releases yet, and no previous tag for the first release",
+      "A repository may publish no package at all, in which case the package check reports absent rather than failing"
+    ],
+    "readiness_checks": [
+      "the release command line interface is present and authenticated",
+      "the tag lookup by exact name returns either the expected record or a definite absence"
+    ]
+  },
+  "semantic_recon": {
+    "applies": true,
+    "target_type": "DATA_API",
+    "required_operations": [
+      "read a tag by exact name and resolve it to a commit",
+      "read a release by tag name including its notes",
+      "read a published package version back from the registry",
+      "create a release with release notes for an existing tag"
+    ],
+    "freshness_check": "the release interface is probed live before it is trusted, and a report that is not fresh and usable is a safe stop rather than a licence to publish",
+    "sources": [
+      {
+        "id": "release-api",
+        "type": "api",
+        "reuse": "recurring",
+        "impact": "high",
+        "contract_id": "release_api",
+        "contract_path": "C:\\Users\\15854\\.agents\\skills\\_sources\\release-it-skill\\contracts\\data_contract_release_api"
+      }
+    ]
+  },
+  "semantic_contract": {
+    "applies": false
+  },
+  "routing_tests": {
+    "should_trigger": [
+      "\u5e2e\u6211\u7ed9\u8fd9\u4e2a\u4ed3\u5e93\u53d1\u4e00\u4e2a\u7248\u672c",
+      "\u6253\u6807\u7b7e\u5e76\u521b\u5efa release\uff0c\u5e26\u4e0a\u53d1\u5e03\u8bf4\u660e",
+      "\u53d1\u5e03\u8fd9\u4e2a\u5305\u5e76\u628a tag / release / \u5305\u7684\u94fe\u63a5\u7ed9\u6211",
+      "\u68c0\u67e5\u4e00\u4e0b v1.4.0 \u7684 tag \u548c npm \u4e0a\u53d1\u7684\u5305\u662f\u4e0d\u662f\u540c\u4e00\u4e2a commit",
+      "release this repository and publish the package",
+      "dry-run the release so I can see what would be published"
+    ],
+    "should_not_trigger": [
+      "\u5e2e\u6211\u5199\u4e00\u4e2a CHANGELOG \u6a21\u677f",
+      "\u628a\u8fd9\u4e2a\u4ed3\u5e93 clone \u5230\u672c\u5730",
+      "\u5347\u7ea7\u4f9d\u8d56\u5230\u6700\u65b0\u7248\u672c",
+      "\u5e2e\u6211\u8bbe\u8ba1\u7248\u672c\u53f7\u89c4\u8303",
+      "publish this blog post"
+    ]
+  },
+  "support_tier": "supported"
+}

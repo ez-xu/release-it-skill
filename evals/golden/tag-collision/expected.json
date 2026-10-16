@@ -1,0 +1,71 @@
+{
+  "scenario": "tag-collision",
+  "expect": "refused",
+  "mode": "release",
+  "exit_code": 2,
+  "satisfied": true,
+  "reason": "refused with exit 2 and changed nothing",
+  "verdict": "",
+  "consistent": false,
+  "refused": [
+    "1.1.0 is not newer than the released tag v1.1.0; release-it only accepts an explicit version it considers greater than or equal to the latest tag",
+    "tag v1.1.0 already exists on origin; a published version is never reused"
+  ],
+  "blockers": [
+    "1.1.0 is not newer than the released tag v1.1.0; release-it only accepts an explicit version it considers greater than or equal to the latest tag",
+    "tag v1.1.0 already exists on origin; a published version is never reused"
+  ],
+  "tag": "v1.1.0",
+  "version": "1.1.0",
+  "notes_chars": 115,
+  "notes_sections": [],
+  "release_record": {},
+  "links": {
+    "repository": "https://github.com/ez-xu/release-it-skill-fixture",
+    "tag": "https://github.com/ez-xu/release-it-skill-fixture/releases/tag/v1.1.0",
+    "release": "https://github.com/ez-xu/release-it-skill-fixture/releases/tag/v1.1.0",
+    "package": "https://www.npmjs.com/package/release-it-skill-fixture/v/1.1.0",
+    "registry": "https://registry.npmjs.org/release-it-skill-fixture",
+    "compare": "https://github.com/ez-xu/release-it-skill-fixture/compare/v1.1.0...v1.1.0",
+    "api": "https://api.github.com/repos/ez-xu/release-it-skill-fixture/releases/tags/v1.1.0",
+    "package_published": false
+  },
+  "checks": [],
+  "failed_checks": [],
+  "error": "",
+  "before": {
+    "head": "a31b01898b15d1d45cf9bcc7034d9c05cda46a69",
+    "tags": [
+      "v1.0.0",
+      "v1.1.0"
+    ],
+    "remote_refs": [
+      "refs/tags/v1.0.0",
+      "refs/tags/v1.0.0^{}",
+      "refs/tags/v1.1.0",
+      "refs/tags/v1.1.0^{}"
+    ],
+    "manifest_blob": "be3a13c1737935f5fa01013a8da871774d903e1f",
+    "version": "1.0.0"
+  },
+  "after": {
+    "head": "a31b01898b15d1d45cf9bcc7034d9c05cda46a69",
+    "tags": [
+      "v1.0.0",
+      "v1.1.0"
+    ],
+    "remote_refs": [
+      "refs/tags/v1.0.0",
+      "refs/tags/v1.0.0^{}",
+      "refs/tags/v1.1.0",
+      "refs/tags/v1.1.0^{}"
+    ],
+    "manifest_blob": "be3a13c1737935f5fa01013a8da871774d903e1f",
+    "version": "1.0.0"
+  },
+  "added_tags": [],
+  "untouched": true,
+  "tag_commit": "a31b01898b15d1d45cf9bcc7034d9c05cda46a69",
+  "remote_tag_commit": "a31b01898b15d1d45cf9bcc7034d9c05cda46a69",
+  "stdout_tail": "github ez-xu/release-it-skill-fixture (main)\nversion  1.1.0  from increment:minor\ntag      v1.1.0\nprevious v1.1.0\nrunner   release-it --ci --config C:\\Users\\15854\\AppData\\Local\\Temp\\release-it-skill-evals\\tag-collision\\.git\\release-it-skill\\release-it.json --no-npm.publish 1.1.0\nwrites   C:\\Users\\15854\\AppData\\Local\\Temp\\release-it-skill-evals\\tag-collision\\.git\\release-it-skill\nrelease  https://github.com/ez-xu/release-it-skill-fixture/releases/tag/v1.1.0\npackage  https://www.npmjs.com/package/release-it-skill-fixture/v/1.1.0\nwarning: node 24.14.0 does not satisfy release-it 21.1.1 engines ^22.22.2 || ^24.15.0 || >=26.0.0; expect an engines warning and possibly a hard failure\nBLOCKED: 1.1.0 is not newer than the released tag v1.1.0; release-it only accepts an explicit version it considers greater than or equal to the latest tag\nBLOCKED: tag v1.1.0 already exists on origin; a published version is never reused\nREFUSED: 1.1.0 is not newer than the released tag v1.1.0; release-it only accepts an explicit version it considers greater than or equal to the latest tag; tag v1.1.0 already exists on origin; a published version is never reused\n"
+}

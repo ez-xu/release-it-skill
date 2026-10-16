@@ -1,0 +1,9 @@
+{
+  "id": "dirty-refusal",
+  "scenario": "dirty",
+  "mode": "release",
+  "increment": "minor",
+  "publish": false,
+  "expect": "refused",
+  "why": "An uncommitted edit means the release could not describe the commit that is actually on disk. Publishing is public and hard to withdraw, so the plan must refuse and touch nothing."
+}

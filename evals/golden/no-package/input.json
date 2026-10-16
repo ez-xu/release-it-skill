@@ -1,0 +1,9 @@
+{
+  "id": "no-package",
+  "scenario": "no-package",
+  "mode": "release",
+  "increment": "minor",
+  "publish": false,
+  "expect": "refused",
+  "why": "Without a readable package manifest the current version cannot be established, so the version the tag would carry is unknowable. Refuse rather than guess."
+}
