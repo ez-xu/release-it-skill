@@ -1,8 +1,8 @@
 # Verification: release-it-skill
 
-<!-- agent-skill-verification: {"clean": true, "commit": "061566f9195c0fc9eed1595f9cf447a25888e729", "fingerprint": "6e58659d9fde4cfb12f7ef6ab2d6a34998accaa9ebe1ac42d93582cbab41c5b0", "version": "1.0.0"} -->
+<!-- agent-skill-verification: {"clean": true, "commit": "532ab427ba60b93e4ed086daa9c6dc5f180f4a96", "fingerprint": "59458d2ebbde25b6e8c61e427b154e9ac8608d77a9540088135a5e14a47350e6", "version": "1.0.0"} -->
 
-Generated: 2026-10-16T10:21:00Z
+Generated: 2026-10-16T10:39:08Z
 
 ## Release evidence
 
