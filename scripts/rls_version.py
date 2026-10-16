@@ -61,6 +61,9 @@ SECTIONS = {
 OTHER = ("Other changes", 900)
 BREAKING = ("⚠ Breaking Changes", 0)
 
+# The notes lead with the feature items: a release note is a list of what is new.
+FEATURES = SECTIONS["feat"]
+
 _CONVENTIONAL = re.compile(
     r"^(?P<type>[a-zA-Z]+)(?:\((?P<scope>[^)]*)\))?(?P<breaking>!)?:\s*(?P<subject>.+)$"
 )
@@ -258,23 +261,47 @@ def _order(title):
     return 500
 
 
-def render_notes(version, rows, previous_tag="", package=None, repository_url=""):
-    """Render release notes as a terse Markdown outline.
+def visible_sections(buckets):
+    """Return the section titles the notes show, in order.
 
-    One requirement per line: every change is a single bullet carrying the subject it
-    was committed with, its short commit id and any issue it names.  The section
-    headings are the outline; nothing is explained in prose, and no boilerplate line
-    (the package, the comparison base) is repeated here — the report and the links
-    already carry those.  ``previous_tag``, ``package`` and ``repository_url`` are kept
-    in the signature for callers; only ``repository_url`` is used, to make an issue
-    reference a link that still renders as a short ``#12``.
+    Only the feature items are listed — a release note is a list of what is new.  A
+    breaking change is shown whether or not it is a feature, because leaving one out of
+    a release note is worse than a longer note.  When the release has no feature item at
+    all, the highest-ranked section that does have content is shown instead, so that a
+    release made only of fixes still says something.
+    """
+    features = buckets.get(FEATURES[0], [])
+    breaking = [entry for entry in buckets.get(BREAKING[0], []) if entry not in features]
+    if features or breaking:
+        names = []
+        if breaking:
+            names.append(BREAKING[0])
+        if features:
+            names.append(FEATURES[0])
+        return names
+    for name in sorted(buckets, key=_order):
+        if buckets[name]:
+            return [name]
+    return []
+
+
+def render_notes(version, rows, previous_tag="", package=None, repository_url=""):
+    """Render the release notes as a one-line-per-feature Markdown outline.
+
+    One feature item per line: a single bullet carrying the subject it was committed
+    with, its short commit id and any issue it names.  The section headings are the
+    outline; nothing is explained in prose, and no boilerplate line (the package, the
+    comparison base) is repeated here — the report and the links already carry those.
+    ``previous_tag``, ``package`` and ``repository_url`` are kept in the signature for
+    callers; only ``repository_url`` is used, to make an issue reference a link that
+    still renders as a short ``#12``.
     """
     buckets = parse_commits(rows)
     lines = ["## Release %s" % version, ""]
     if not rows:
         lines.append("- no changes since the previous tag")
         return "\n".join(lines).rstrip() + "\n"
-    for name in sorted(buckets, key=_order):
+    for name in visible_sections(buckets):
         lines.append("### %s" % name)
         for entry in buckets[name]:
             # Collapse any whitespace so one requirement can never become two lines.

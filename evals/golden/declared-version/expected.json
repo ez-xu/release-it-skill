@@ -12,11 +12,7 @@
   "tag": "V5.1.7.12_weiyuan_G200464803_20261016_8aef61de",
   "version": "5.1.7.12_weiyuan_G200464803_20261016_8aef61de",
   "notes_chars": 357,
-  "notes_sections": [
-    "Features",
-    "Bug Fixes",
-    "Documentation"
-  ],
+  "notes_sections": ["Features"],
   "release_record": {
     "argv": [
       "release-it",

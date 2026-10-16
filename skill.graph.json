@@ -51,7 +51,7 @@
     {
       "id": "clean_minor_expected",
       "path": "evals/golden/clean-minor/expected.json",
-      "sha256": "b8e49359fdb590483195b3871a8db61987c3272385f07e14b69657eca8414fdf",
+      "sha256": "f3e95b7170ec69a6682be883825f6b951f957a12748eed938aff8ff89033493e",
       "type": "expected_output"
     },
     {
@@ -63,7 +63,7 @@
     {
       "id": "declared_version_expected",
       "path": "evals/golden/declared-version/expected.json",
-      "sha256": "1a846cffd53a046823c280339204676a5954145e21e17ffbe36efe1945b5b316",
+      "sha256": "c2c444a872925931fb1dc09a5b119c0ef0b4adb6e904d692870b63b17162fced",
       "type": "expected_output"
     },
     {
@@ -75,7 +75,7 @@
     {
       "id": "dirty_refusal_expected",
       "path": "evals/golden/dirty-refusal/expected.json",
-      "sha256": "5b6caf4abf0fe67ed779ad9e4be8a123a1d88a09cb2fd557618b6bcd517b50d7",
+      "sha256": "337dd69102b55c752c16c1a9846735f0e5c6284e2c97ef0e9c89f9254e07e93d",
       "type": "expected_output"
     },
     {
@@ -87,7 +87,7 @@
     {
       "id": "dry_run_expected",
       "path": "evals/golden/dry-run/expected.json",
-      "sha256": "9d2d21a98320fbec37b3fca3667f173745fd6e060d17c1ae919c72f9e808e3b5",
+      "sha256": "31498b90e53bbd0b33f40b73849016ac6a3857f506f262ca2fd483de66684deb",
       "type": "expected_output"
     },
     {
@@ -105,7 +105,7 @@
     {
       "id": "no_package_expected",
       "path": "evals/golden/no-package/expected.json",
-      "sha256": "2fe56910248c7265fdda9f701ee2c8fd8ff0ef7bf631825e3fedcfec22306f35",
+      "sha256": "4e6e1cbe867a030f845f2f697c475498d18a6227299c0b0fc161d20b02eeb941",
       "type": "expected_output"
     },
     {
@@ -135,7 +135,7 @@
     {
       "id": "evolution_md",
       "path": "EVOLUTION.md",
-      "sha256": "7d555d24d5229ea500216926e6604659efe9a1144c745db84eb3bdeb06af2d11",
+      "sha256": "f13f8e2d37000a98e3c481a48d88bd9e177bcb9ab2d7bda96a1bf158d2b10878",
       "type": "package_file"
     },
     {
@@ -291,7 +291,7 @@
     {
       "id": "scripts_rls_version_py",
       "path": "scripts/rls_version.py",
-      "sha256": "f69b627ec3c3fb2c76bd4a2f2ef76e1e6bd976a51a7afb97dbcf57812be54ba0",
+      "sha256": "823581d652d17c4fcb516be3c79179ad379faf4a610bae72dfc3537348c889bb",
       "type": "script"
     },
     {
@@ -339,13 +339,13 @@
     {
       "id": "skill_document",
       "path": "SKILL.md",
-      "sha256": "89f3c33af0233f71ecfd3a4b05fee1a7be0bab0332c92c57fbb03554ef676824",
+      "sha256": "c90e5326b82d4ff52b581059b2d57f9df7f5999362060927f5830478931e5900",
       "type": "instruction"
     },
     {
       "id": "verification_md",
       "path": "VERIFICATION.md",
-      "sha256": "76bf80b6d5e2766f9bd1a0f163e96ea9c299c85456bac2fb83fa195e3eea4b7f",
+      "sha256": "52d8d7661ca7fde137ac23ceabaf1343888baaec27ff31168a46cb1e2a4cb56d",
       "type": "package_file"
     },
     {
